@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CARTO — Cartographer Agent | SnapKitty Sovereign Law</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #d4af37;
+      --gold-bright: #f5d060;
+      --cream: #f0e8d0;
+      --dark: #0a0a0a;
+      --dark2: #111111;
+      --dark3: #1a1a1a;
+      --green: #00ff88;
+      --vault-blue: #0a84ff;
+      --border: rgba(212,175,55,0.25);
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--dark);
+      color: var(--cream);
+      font-family: 'Georgia', serif;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ─────────────────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      position: relative;
+      background: radial-gradient(ellipse at 50% 40%, rgba(212,175,55,0.06) 0%, transparent 70%);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .hero-badge {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      border: 1px solid var(--border);
+      padding: 0.4rem 1.2rem;
+      margin-bottom: 2.5rem;
+      text-transform: uppercase;
+    }
+
+    .hero-name {
+      font-size: clamp(3rem, 10vw, 7rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--gold-bright);
+      text-shadow: 0 0 60px rgba(212,175,55,0.3);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-sub {
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      letter-spacing: 0.25em;
+      color: rgba(240,232,208,0.5);
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+      font-family: 'Courier New', monospace;
+    }
+
+    .hero-tagline {
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      line-height: 1.6;
+      max-width: 680px;
+      color: var(--cream);
+      margin-bottom: 3rem;
+      font-style: italic;
+    }
+
+    .hero-tagline strong { color: var(--gold); font-style: normal; }
+
+    .cta-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 0.8rem 2rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid var(--gold);
+      color: var(--dark);
+      background: var(--gold);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn:hover { background: var(--gold-bright); border-color: var(--gold-bright); }
+    .btn.outline { background: transparent; color: var(--gold); }
+    .btn.outline:hover { background: rgba(212,175,55,0.1); }
+
+    /* ── DOMAINS ──────────────────────────────────────────────────── */
+    .section {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+    }
+
+    .section-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--cream);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .section-desc {
+      font-size: 1rem;
+      color: rgba(240,232,208,0.6);
+      max-width: 600px;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+
+    .domain-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .domain-card {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      padding: 1.8rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .domain-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    .domain-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+    .domain-name {
+      font-size: 1rem;
+      font-family: 'Courier New', monospace;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+    .domain-desc {
+      font-size: 0.85rem;
+      color: rgba(240,232,208,0.6);
+      line-height: 1.6;
+    }
+
+    /* ── VAULT PARTNERSHIP ───────────────────────────────────────── */
+    .vault-section {
+      background: var(--dark2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .vault-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 6rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    @media (max-width: 700px) { .vault-inner { grid-template-columns: 1fr; gap: 2rem; } }
+
+    .vault-badge {
+      display: inline-block;
+      font-family: 'Courier New', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      color: var(--vault-blue);
+      border: 1px solid var(--vault-blue);
+      padding: 0.3rem 0.8rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .vault-title {
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      color: var(--cream);
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .vault-title span { color: var(--vault-blue); }
+
+    .vault-desc {
+      font-size: 0.95rem;
+      color: rgba(240,232,208,0.65);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+
+    .package-card {
+      background: var(--dark3);
+      border: 1px solid rgba(10,132,255,0.3);
+      padding: 2rem;
+    }
+
+    .package-title {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--vault-blue);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .package-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .package-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      margin-top: 0.45rem;
+      flex-shrink: 0;
+    }
+    .dot-gold { background: var(--gold); }
+    .dot-blue { background: var(--vault-blue); }
+
+    .package-text { font-size: 0.9rem; color: rgba(240,232,208,0.8); line-height: 1.5; }
+    .package-text strong { color: var(--cream); }
+
+    .package-price {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(10,132,255,0.2);
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: rgba(240,232,208,0.5);
+    }
+    .package-price strong { color: var(--vault-blue); font-size: 1.1rem; }
+
+    /* ── WORM TICKER ──────────────────────────────────────────────── */
+    .ticker {
+      background: var(--dark3);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 0.7rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .ticker-inner {
+      display: inline-block;
+      animation: scroll 40s linear infinite;
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+    }
+
+    @keyframes scroll {
+      0% { transform: translateX(100vw); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* ── CORPUS STATS ─────────────────────────────────────────────── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+
+    .stat-card {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: rgba(240,232,208,0.4);
+      text-transform: uppercase;
+    }
+
+    /* ── PROLOG KERNEL ────────────────────────────────────────────── */
+    .code-block {
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: var(--green);
+      line-height: 1.8;
+      overflow-x: auto;
+      margin-top: 2rem;
+    }
+
+    .code-comment { color: rgba(0,255,136,0.4); }
+    .code-pred { color: var(--gold); }
+
+    /* ── FOOTER ───────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      color: rgba(240,232,208,0.25);
+      letter-spacing: 0.15em;
+    }
+
+    footer a { color: var(--gold); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <span class="ticker-inner">
+      CARTO ONLINE ⚖️ CARTOGRAPHER AGENT · SOVEREIGN LAW ENGINE · WORM-SEALED CORPUS · 64 TRAINING ENTRIES · 9 CHAPTERS · FCRA · ACH · NACHA · BANKRUPTCY CH11/CH13 · UCC-1 · MOORISH TRUST FRAMEWORK · IRS CATCODE DEFENSE · VAULT PARTNERSHIP ACTIVE · PETITION → ESTATE → STAY → PLAN → CONFIRMATION → DISCHARGE · WORM TRACE SEALED · CARTO ONLINE ⚖️ CARTOGRAPHER AGENT · SOVEREIGN LAW ENGINE ·
+    </span>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">SNAPKITTY SOVEREIGN STACK · LEGAL INTELLIGENCE</div>
+    <h1 class="hero-name">CARTO</h1>
+    <p class="hero-sub">CARTOGRAPHER AGENT · SOVEREIGN LAW ENGINE</p>
+    <p class="hero-tagline">
+      CARTO maps the legal terrain so you never walk into court, a creditor dispute, or an IRS audit <strong>blind</strong>.
+      Trained on the sovereign playbook. Sealed in WORM. Partnered with VAULT.
+    </p>
+    <div class="cta-row">
+      <a href="https://collectivekitty.com" class="btn">Get the Package</a>
+      <a href="https://github.com/SNAPKITTYWEST/cartographer-agent" class="btn outline">View Corpus</a>
+    </div>
+  </section>
+
+  <!-- DOMAINS -->
+  <div class="section">
+    <p class="section-label">⚖️ Legal Domains</p>
+    <h2 class="section-title">CARTO knows the terrain</h2>
+    <p class="section-desc">Nine chapters of sovereign legal knowledge — trained on field-tested playbooks, not textbooks.</p>
+
+    <div class="domain-grid">
+      <div class="domain-card">
+        <div class="domain-icon">📋</div>
+        <div class="domain-name">Credit Repair Mastery</div>
+        <div class="domain-desc">30-60 day 780 score fast track. Secondary agencies: Innovis, Sage, LexisNexis, CoreLogic, TeleChex, ChexSystem, EWS. Credit baptism protocol.</div>
+      </div>
+      <div class="domain-card">
+        <div class="domain-icon">🏛</div>
+        <div class="domain-name">Sovereign Trust Architecture</div>
+        <div class="domain-desc">bel esprit d'accord trust → GRAT → Section 1071 Holdings. Enterprise Umbrella structure. Mastery of Borrowing — Quranic foundation.</div>
+      </div>
+      <div class="domain-card">
+        <div class="domain-icon">🏦</div>
+        <div class="domain-name">ACH Dispute Protocol</div>
+        <div class="domain-desc">NACHA Operating Rules. Return codes R10/R07/R05. Authorization revocation. ODFI liability chain. NACHA audit requirements.</div>
+      </div>
+      <div class="domain-card">
+        <div class="domain-icon">🔍</div>
+        <div class="domain-name">FCRA · Metro 2 · Zombie Debt</div>
+        <div class="domain-desc">Furnisher investigation duties. Metro 2 Base Segment audit. OSCAR method. UCC-1 self-perfection. Re-aging detection and defeat.</div>
+      </div>
+      <div class="domain-card">
+        <div class="domain-icon">⚖️</div>
+        <div class="domain-name">Bankruptcy Ch. 11 / Ch. 13</div>
+        <div class="domain-desc">Automatic Stay. Cramdown. DIP financing. Executory contract rejection. Feasibility and best interest tests. Real estate lien stripping.</div>
+      </div>
+      <div class="domain-card">
+        <div class="domain-icon">📜</div>
+        <div class="domain-name">Moorish Trust Framework</div>
+        <div class="domain-desc">MSTA documented entity. Noble Drew Ali founding authority. 1928 Vast Estate Express Trust doctrine. Court treatment under neutral principles.</div>
+      </div>
+      <div class="domain-card">
+        <div class="domain-icon">🏦</div>
+        <div class="domain-name">Trust Account Scan</div>
+        <div class="domain-desc">Certificate of Trust. KYC/CIP for trust accounts. Account Title Defect detection. Self-dealing prohibition. Fiduciary Audit Trail.</div>
+      </div>
+      <div class="domain-card">
+        <div class="domain-icon">🛡</div>
+        <div class="domain-name">IRS Audit CatCode Defense</div>
+        <div class="domain-desc">12-code deterministic audit protocol. WORM chain as CAT-VAL-001 proof. HoneyPot reconciliation for CAT-IN-002. Saint Errant pre-audit loop.</div>
+      </div>
+      <div class="domain-card">
+        <div class="domain-icon">🔬</div>
+        <div class="domain-name">Evoked Adversarial Personas</div>
+        <div class="domain-desc">IRS Auditor red-team mode. Deploy before filing. COUNSEL runs 12 CatCodes on your own structure before the IRS does. Shadowself: war mode only.</div>
+      </div>
+    </div>
+
+    <!-- CORPUS STATS -->
+    <div class="stats-grid">
+      <div class="stat-card"><span class="stat-number">64</span><span class="stat-label">Training Entries</span></div>
+      <div class="stat-card"><span class="stat-number">9</span><span class="stat-label">Corpus Chapters</span></div>
+      <div class="stat-card"><span class="stat-number">7</span><span class="stat-label">Prolog Predicates</span></div>
+      <div class="stat-card"><span class="stat-number">12</span><span class="stat-label">IRS CatCodes</span></div>
+      <div class="stat-card"><span class="stat-number">1</span><span class="stat-label">Evoked Persona</span></div>
+    </div>
+  </div>
+
+  <!-- PROLOG KERNEL -->
+  <div style="background: var(--dark2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="section" style="padding-top: 4rem; padding-bottom: 4rem;">
+      <p class="section-label">⚙️ Prolog Kernel</p>
+      <h2 class="section-title">Constitutional court logic</h2>
+      <p class="section-desc">CARTO's Prolog kernel runs dispute standing, zombie debt detection, trust classification, and fiduciary breach — deterministically.</p>
+      <div class="code-block">
+<span class="code-comment">%% CARTO — carto.pl — Sovereign Law Prolog Kernel</span>
+
+<span class="code-pred">has_standing</span>(Consumer, fcra_dispute) :-
+  consumer_of_record(Consumer),
+  ( wrong_dofd(Consumer, _)
+  ; broken_chain_of_assignment(Consumer, _)
+  ; re_aged_account(Consumer) ).
+
+<span class="code-pred">zombie_debt_flags</span>(Account, Flags) :-
+  findall(F, zombie_flag(Account, F), Flags),
+  Flags \= [].
+
+<span class="code-pred">trust_classification</span>(bel_esprit_daccord, revocable_living_trust).
+<span class="code-pred">trust_classification</span>(grat, grantor_retained_annuity_trust).
+
+<span class="code-pred">return_code_rights</span>(Consumer, r10, Rights) :-
+  consumer_account(Consumer),
+  \+ authorization_exists(Consumer),
+  Rights = [return_mandatory, window_days(60), odfi_bears_risk].
+      </div>
+    </div>
+  </div>
+
+  <!-- VAULT PARTNERSHIP -->
+  <section class="vault-section">
+    <div class="vault-inner">
+      <div>
+        <div class="vault-badge">⊕ STRATEGIC PARTNERSHIP</div>
+        <h2 class="vault-title">CARTO + <span>VAULT</span><br>The Sovereign Package</h2>
+        <p class="vault-desc">
+          CARTO maps the legal terrain. VAULT builds the fundability engine.
+          Together they deliver the complete sovereign financial and legal stack —
+          credit, disputes, trust, fundability, and IRS defense in one package.
+        </p>
+        <p class="vault-desc">
+          VAULT handles: Paydex, BaaS tradelines, credit tiers, business fundability.<br>
+          CARTO handles: FCRA disputes, ACH returns, trust architecture, IRS pre-audit.
+        </p>
+        <a href="https://snapkittywest.github.io/vault-fundability-engine/" class="btn outline" style="border-color: var(--vault-blue); color: var(--vault-blue);">View VAULT Engine →</a>
+      </div>
+
+      <div class="package-card">
+        <div class="package-title">⚖️ The Sovereign Package — What You Get</div>
+
+        <div class="package-item">
+          <div class="package-dot dot-gold"></div>
+          <div class="package-text"><strong>CARTO Legal Engine</strong> — FCRA dispute strategy, ACH return protocol, trust architecture review</div>
+        </div>
+        <div class="package-item">
+          <div class="package-dot dot-blue"></div>
+          <div class="package-text"><strong>VAULT Fundability Engine</strong> — Paydex, BaaS credit tiers, tradeline strategy, bank relationship map</div>
+        </div>
+        <div class="package-item">
+          <div class="package-dot dot-gold"></div>
+          <div class="package-text"><strong>Credit Baptism Protocol</strong> — 30-60 day 780 score fast track, secondary agency freeze</div>
+        </div>
+        <div class="package-item">
+          <div class="package-dot dot-blue"></div>
+          <div class="package-text"><strong>Enterprise Umbrella Setup</strong> — Sole pro → trust → holdings entity stack</div>
+        </div>
+        <div class="package-item">
+          <div class="package-dot dot-gold"></div>
+          <div class="package-text"><strong>IRS Pre-Audit</strong> — 12 CatCode self-audit before filing. Return arrives already proven.</div>
+        </div>
+        <div class="package-item">
+          <div class="package-dot dot-blue"></div>
+          <div class="package-text"><strong>WORM-Sealed Evidence Chain</strong> — every action cryptographically signed and sealed</div>
+        </div>
+
+        <div class="package-price">
+          Contact: <strong>devops@collectivekitty.com</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>CARTO · CARTOGRAPHER AGENT · SNAPKITTY COLLECTIVE · 2026</p>
+    <p style="margin-top:0.5rem;">
+      <a href="https://collectivekitty.com">collectivekitty.com</a> ·
+      <a href="https://github.com/SNAPKITTYWEST/cartographer-agent">GitHub</a> ·
+      <a href="https://snapkittywest.github.io/vault-fundability-engine/">VAULT Partner</a>
+    </p>
+    <p style="margin-top:0.5rem;">Sovereign Source License v1.0 · © 2026 Ahmad Ali Parr</p>
+  </footer>
+
+</body>
+</html>
