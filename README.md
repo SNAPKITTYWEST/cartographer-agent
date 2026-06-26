@@ -32,3 +32,5 @@ CARTO maps the legal terrain. 64 training entries across 9 chapters of sovereign
 
 ## Sovereign Source License v1.0
 © 2026 Ahmad Ali Parr · Cannot be used to train commercial models without written license from the Principal.
+
+![](https://sovereign-analytics.snapkittywest.workers.dev/canary/cartographer-agent)
