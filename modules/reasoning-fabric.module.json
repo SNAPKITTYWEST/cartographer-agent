@@ -1,0 +1,23 @@
+{
+  "id": "reasoning-fabric",
+  "name": "SnapKitty Law Team - Reasoning Fabric",
+  "status": "hardened-scaffold",
+  "owner": "cartographer-agent",
+  "purpose": "Attach external engines, route summons, spawn meta-lawyers, and seal execution paths.",
+  "files": [
+    "runtime/nemotron-fsm.rs",
+    "runtime/summon-envelope.mjs",
+    "runtime/engine-registry.json",
+    "docs/reasoning-fabric.md"
+  ],
+  "exports": [
+    "nemotron_reasoner",
+    "gemini_news",
+    "carto_auditor"
+  ],
+  "hardening": [
+    "explicit attach-audit-summon-spawn-seal lifecycle",
+    "engine registry separated from kernel registry",
+    "summon contract isolated from trust deed gate"
+  ]
+}

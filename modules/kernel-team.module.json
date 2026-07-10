@@ -1,0 +1,24 @@
+{
+  "id": "kernel-team",
+  "name": "SnapKitty Law Team - Kernel Team",
+  "status": "hardened-scaffold",
+  "owner": "cartographer-agent",
+  "purpose": "Core legal reasoning, procedural law operations, and workflow glue.",
+  "files": [
+    "prolog/carto.pl",
+    "kernels/cobol-law-kernel.cob",
+    "kernels/rexx-glue-kernel.rexx",
+    "corpus/kernels-digital-law-team.jsonl",
+    "docs/digital-law-team.md"
+  ],
+  "exports": [
+    "carto_kernel",
+    "cobol_law_kernel",
+    "rexx_glue_kernel"
+  ],
+  "hardening": [
+    "separate kernel responsibility",
+    "shared corpus with split logic profile",
+    "no runtime role mutation"
+  ]
+}

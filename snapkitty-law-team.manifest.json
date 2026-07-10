@@ -1,0 +1,27 @@
+{
+  "id": "snapkitty-law-team",
+  "source_repo": "cartographer-agent",
+  "status": "cherry-pick-ready",
+  "modules": [
+    "modules/kernel-team.module.json",
+    "modules/reasoning-fabric.module.json",
+    "modules/trust-deed.module.json"
+  ],
+  "production_hardening": {
+    "module_boundaries": true,
+    "kernel_registry": true,
+    "engine_registry": true,
+    "deed_registry": true,
+    "worm_persistence": "stubbed",
+    "ui_generator": "not yet bound",
+    "external_engine_calls": "not yet bound"
+  },
+  "next_repo_shape": [
+    "corpus/",
+    "docs/",
+    "kernels/",
+    "modules/",
+    "prolog/",
+    "runtime/"
+  ]
+}

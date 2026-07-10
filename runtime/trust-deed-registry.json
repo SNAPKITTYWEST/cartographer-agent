@@ -1,0 +1,28 @@
+{
+  "templates": [
+    {
+      "id": "sovereign_trust_deed",
+      "class": "sovereign",
+      "trustee": "CARTO",
+      "beneficiary": "Principal",
+      "powers": ["audit_case", "summon_engine", "seal_receipt"],
+      "restrictions": ["modify_deed", "change_trustee", "override_axiom"]
+    },
+    {
+      "id": "corporate_deed",
+      "class": "corporate",
+      "trustee": "COBOL_LAW_KERNEL",
+      "beneficiary": "Corporate Formation Flow",
+      "powers": ["generate_corporate_packet", "create_formation_record", "prepare_notice_batch"],
+      "restrictions": ["modify_deed", "delete_ledger", "unsealed_store"]
+    },
+    {
+      "id": "meta_lawyer_deed",
+      "class": "spawned-agent",
+      "trustee": "NEMOTRON_REASONER",
+      "beneficiary": "Meta Lawyer",
+      "powers": ["spawn_profile", "route_query", "research_law_results"],
+      "restrictions": ["change_trustee", "override_governance", "spawn_without_audit"]
+    }
+  ]
+}

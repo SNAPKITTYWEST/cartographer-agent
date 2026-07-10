@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CARTO — Shakespearean Layer</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #0a0a0a;
+      color: #f0e8d0;
+      font-family: Georgia, serif;
+      line-height: 1.7;
+    }
+    .wrap {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 6rem;
+    }
+    .badge, .label {
+      font-family: "Courier New", monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #d4af37;
+    }
+    h1 {
+      font-size: clamp(2.4rem, 6vw, 4.6rem);
+      margin: 0.6rem 0 0.8rem;
+      color: #f5d060;
+    }
+    p.lead {
+      max-width: 720px;
+      color: rgba(240,232,208,0.78);
+      font-size: 1.05rem;
+    }
+    .panel {
+      margin-top: 2rem;
+      background: #111;
+      border: 1px solid rgba(212,175,55,0.25);
+      padding: 1.5rem;
+    }
+    .play-shell {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 860px) {
+      .play-shell {
+        grid-template-columns: 1fr;
+      }
+    }
+    .code-pane,
+    .stage-pane {
+      background: #151515;
+      border: 1px solid rgba(212,175,55,0.18);
+      padding: 1rem;
+    }
+    .pane-title {
+      font-family: "Courier New", monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 0.8rem;
+    }
+    .code-pane pre {
+      font-family: "Courier New", monospace;
+      font-size: 0.84rem;
+      color: #f0e8d0;
+      line-height: 1.75;
+    }
+    .stage-script {
+      display: grid;
+      gap: 0.9rem;
+    }
+    .speech {
+      border-left: 2px solid rgba(212,175,55,0.35);
+      padding-left: 0.8rem;
+    }
+    .speaker {
+      color: #f5d060;
+      font-size: 0.96rem;
+      margin-bottom: 0.25rem;
+    }
+    .speech p {
+      color: rgba(240,232,208,0.76);
+      margin: 0;
+    }
+    .court-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .avatar-card {
+      background: #151515;
+      border: 1px solid rgba(212,175,55,0.18);
+      padding: 1rem;
+      text-align: center;
+    }
+    .kitty {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 0.8rem;
+      border-radius: 50%;
+      border: 2px solid rgba(212,175,55,0.4);
+      display: grid;
+      place-items: center;
+      font-size: 2rem;
+      background: radial-gradient(circle at 35% 30%, rgba(245,208,96,0.25), rgba(212,175,55,0.05));
+    }
+    .role {
+      font-family: "Courier New", monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin-bottom: 0.4rem;
+    }
+    .name {
+      color: #f5d060;
+      font-size: 1rem;
+    }
+    .copy {
+      margin-top: 0.45rem;
+      font-size: 0.86rem;
+      color: rgba(240,232,208,0.72);
+    }
+    .timeline {
+      display: grid;
+      gap: 0.9rem;
+      margin-top: 1rem;
+    }
+    .timeline-item {
+      border-left: 2px solid rgba(212,175,55,0.35);
+      padding-left: 0.9rem;
+      color: rgba(240,232,208,0.78);
+    }
+    .timeline-item strong {
+      color: #f5d060;
+    }
+    .switch-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+    .switch {
+      background: transparent;
+      color: #d4af37;
+      border: 1px solid rgba(212,175,55,0.25);
+      padding: 0.7rem 0.9rem;
+      font-family: "Courier New", monospace;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .switch.active {
+      background: rgba(212,175,55,0.12);
+      color: #f5d060;
+      border-color: #d4af37;
+    }
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      font-family: Georgia, serif;
+      font-size: 1rem;
+      color: #f0e8d0;
+    }
+    a {
+      color: #f5d060;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="badge">SnapKitty Law Team · Shakespearean Layer</div>
+    <h1>The Ceremonial Code Surface</h1>
+    <p class="lead">
+      This page gives the law team a British dramatic drafting voice without replacing the real authority stack beneath it.
+      The operative work still belongs to the kernels, the reasoning fabric, and the trust deed layer.
+    </p>
+
+    <div class="panel">
+      <div class="label">Tagore Play Surface</div>
+      <div class="play-shell">
+        <div class="code-pane">
+          <div class="pane-title">Generated Code</div>
+          <pre id="scene-code">ACT I:
+  ENTER LITTLE_ARIA, CARTO, COBOL, REXX, THE_SYSTEM
+  CLAIM Little_Aria AGAINST The_System ON premature_authority
+  CARTO.AUDIT(matter)
+  IF standing = true THEN
+    ROUTE kernel_by_weight_of_law
+  ELSE
+    HOLD at_audit_gate
+  END
+
+ACT II:
+  REXX.SUMMON(court)
+  COBOL.LEDGER(packet, notice, chain)
+  TRUST_DEED.RAISE(if authority be doubted)
+
+ACT III:
+  IF deed = active AND seal = present THEN
+    VERDICT lawful_passage
+  ELSE
+    VERDICT blocked_until_proven
+  END</pre>
+        </div>
+        <div class="stage-pane">
+          <div class="pane-title">Rendered Play</div>
+          <div id="stage-script" class="stage-script">
+            <div class="speech">
+              <div class="speaker">LITTLE ARIA</div>
+              <p>O learned court, I fear the System's stride, for oft it would run ere proof be shown.</p>
+            </div>
+            <div class="speech">
+              <div class="speaker">CARTO</div>
+              <p>No act shall wear the crown of law till standing be examined and the lawful lane be named.</p>
+            </div>
+            <div class="speech">
+              <div class="speaker">COBOL</div>
+              <p>I keep the packet, ledger, and notice in such order as any institution may read without confusion.</p>
+            </div>
+            <div class="speech">
+              <div class="speaker">REXX</div>
+              <p>I move no summons on mine own desire. I route where audit and deed have first allowed.</p>
+            </div>
+            <div class="speech">
+              <div class="speaker">THE SYSTEM</div>
+              <p>Then judge me not in wildness, but in governance; for deed and WORM do bridle all my power.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="label">Simulated Court Case</div>
+      <p class="lead" style="font-size:0.98rem; max-width:none;">
+        A miniature SnapKitty delegation brings suit against the System itself, that the gates, deeds, and judgments may be tested in open ceremonial form before authority is granted.
+      </p>
+      <div class="court-grid">
+        <div class="avatar-card">
+          <div class="kitty">🐱</div>
+          <div class="role">Claimant</div>
+          <div class="name">Little Aria</div>
+          <div class="copy">Complaineth that the System moveth too quickly where proof hath not yet been shown.</div>
+        </div>
+        <div class="avatar-card">
+          <div class="kitty">⚖️</div>
+          <div class="role">Judge</div>
+          <div class="name">CARTO</div>
+          <div class="copy">Sitteth in audit and requireth standing, seal, and lawful route before judgment.</div>
+        </div>
+        <div class="avatar-card">
+          <div class="kitty">📜</div>
+          <div class="role">Clerk</div>
+          <div class="name">COBOL</div>
+          <div class="copy">Keepeth the ledger, packet, and notice in institution-shaped order.</div>
+        </div>
+        <div class="avatar-card">
+          <div class="kitty">🧵</div>
+          <div class="role">Usher</div>
+          <div class="name">REXX</div>
+          <div class="copy">Moveth the summons, openeth the lane, and routeth the matter betwixt chambers.</div>
+        </div>
+        <div class="avatar-card">
+          <div class="kitty">🏛️</div>
+          <div class="role">Respondent</div>
+          <div class="name">The System</div>
+          <div class="copy">Answereth that no act is complete till trust deed and WORM seal have spoken.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="label">Courtroom Modes</div>
+      <div class="switch-row">
+        <button class="switch active" data-scene="opening">Opening Plea</button>
+        <button class="switch" data-scene="cross">Cross Examination</button>
+        <button class="switch" data-scene="verdict">Verdict</button>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item"><strong>Standing:</strong> the kitten claimant seeketh audience against hasty machine authority.</div>
+        <div class="timeline-item"><strong>Question:</strong> may the System act before deed and audit be complete?</div>
+        <div class="timeline-item"><strong>Measure:</strong> kernel route, deed scope, and WORM seal are examined in turn.</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="label">Relation To Runtime</div>
+      <p>This layer is rhetorical. It does not override deed authority, engine attach rules, or kernel logic. It is a presentation skin over the law-team system.</p>
+    </div>
+
+    <p style="margin-top: 2rem;"><a href="./index.html">Return to CARTO</a></p>
+  </div>
+  <script>
+    const scenes = {
+      opening: {
+        code: `ACT I:\n  ENTER LITTLE_ARIA, CARTO, COBOL, REXX, THE_SYSTEM\n  CLAIM Little_Aria AGAINST The_System ON premature_authority\n  CARTO.AUDIT(matter)\n  IF standing = true THEN\n    ROUTE kernel_by_weight_of_law\n  ELSE\n    HOLD at_audit_gate\n  END`,
+        stage: [
+          ["LITTLE ARIA", "O learned Court, I fear the System's stride, for oft a machine would run ere proof be sealed."],
+          ["CARTO", "If law be true, let law be seen in full. No command shall outrun the deed that binds it."],
+          ["THE SYSTEM", "I stand accused not of malice, but of haste; therefore weigh me by the audit and not by rumor."]
+        ]
+      },
+      cross: {
+        code: `ACT II:\n  REXX.SUMMON(court)\n  COBOL.LEDGER(packet, notice, chain)\n  TRUST_DEED.RAISE(if authority be doubted)\n  EXAMINE route, packet, deed_scope`,
+        stage: [
+          ["REXX", "I move no summons on mine own desire. I route where audit and deed have first allowed."],
+          ["COBOL", "I set in order every packet, notice, and ledger, that the court may read the matter as an institution would."],
+          ["LITTLE ARIA", "Then say, good sirs, whether the System may pass before these things be made complete."],
+          ["CARTO", "It may not. For lawful motion without lawful chain is but noise dressed as order."]
+        ]
+      },
+      verdict: {
+        code: `ACT III:\n  IF deed = active AND seal = present THEN\n    VERDICT lawful_passage\n  ELSE\n    VERDICT blocked_until_proven\n  END\n  WORM.SEAL(receipt)`,
+        stage: [
+          ["CARTO", "Against the System in its wild estate, the claimant hath prevailed; yet for the governed System, no fault is found."],
+          ["THE SYSTEM", "Then let my strength be known through discipline, not swiftness."],
+          ["CARTO", "So let the matter pass by lawful lane, and let the WORM receive the final seal."],
+          ["LITTLE ARIA", "I am content, if proof and tenderness walk hand in hand."]
+        ]
+      }
+    };
+
+    const sceneCode = document.getElementById("scene-code");
+    const stageScript = document.getElementById("stage-script");
+    const switches = document.querySelectorAll(".switch");
+    switches.forEach((button) => {
+      button.addEventListener("click", () => {
+        switches.forEach((node) => node.classList.remove("active"));
+        button.classList.add("active");
+        const scene = scenes[button.dataset.scene];
+        sceneCode.textContent = scene.code;
+        stageScript.innerHTML = scene.stage.map(([speaker, line]) => `
+          <div class="speech">
+            <div class="speaker">${speaker}</div>
+            <p>${line}</p>
+          </div>
+        `).join("");
+      });
+    });
+  </script>
+</body>
+</html>

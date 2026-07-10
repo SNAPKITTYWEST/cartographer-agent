@@ -1,0 +1,23 @@
+{
+  "id": "trust-deed-module",
+  "name": "SnapKitty Law Team - Trust Deed Module",
+  "status": "hardened-scaffold",
+  "owner": "cartographer-agent",
+  "purpose": "Generate deeds on the spot and enforce governance protocol over kernels and spawned meta-lawyers.",
+  "files": [
+    "runtime/trust-deed-generator.mjs",
+    "runtime/trust-deed-registry.json",
+    "runtime/governance-gate.mjs",
+    "docs/trust-deed-module.md"
+  ],
+  "exports": [
+    "sovereign_trust_deed",
+    "corporate_deed",
+    "meta_lawyer_deed"
+  ],
+  "hardening": [
+    "explicit deed scope",
+    "runtime governance gate",
+    "no trustee or deed override at prompt time"
+  ]
+}

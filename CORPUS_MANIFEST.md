@@ -82,5 +82,63 @@ Chapter sessions still to be recorded:
 
 ---
 
+## Kernel Team Extension
+
+Added two operational kernels around the existing Prolog kernel:
+
+- `COBOL Law Kernel`
+  - procedural legal business operations
+  - corporate chunks
+  - claim ledgers
+  - trust account statements
+  - notices and fixed-format institutional exports
+
+- `REXX Glue Kernel`
+  - docket automation
+  - host scripting
+  - records routing
+  - workflow glue for repetitive legal office procedure
+
+Corpus additions:
+- `corpus/kernels-digital-law-team.jsonl`
+  - 2 new kernel entries
+  - total public training entries now 66 across corpus + kernel layers
+
+Kernel additions in `prolog/carto.pl`:
+- `digital_law_team_member/4`
+- `language_fit/3`
+- `automation_lane/3`
+- `kernel_corpus_scope/3`
+- `kernel_logic_profile/3`
+- `external_engine/4`
+- `fsm_transition/4`
+- `meta_lawyer_spawn/4`
+- `summon_contract/4`
+- `trust_deed_template/4`
+- `deed_action_authorized/3`
+- `deed_escalation_allowed/3`
+- `governance_protocol/3`
+
+Routing model:
+- shared CARTO corpus across all kernels
+- `Prolog` uses doctrine / standing / breach logic
+- `COBOL` uses corporate chunk / record / procedure logic
+- `REXX` uses docket / routing / glue logic
+
+Reasoning fabric:
+- `CARTO` acts as auditor before any spawn
+- `REXX` routes summons toward attached engines
+- `Nemotron` synthesizes and spawns meta-lawyers
+- `Gemini News` provides current law, article, and corporate-creation context
+- `Tokio FSM` controls the attach / audit / summon / spawn / seal sequence
+
+Trust deed module:
+- generates trust deeds on the spot
+- binds corporate creation flows to explicit deed authority
+- blocks spawn or escalation when deed conditions are not met
+- makes governance protocol part of the runtime, not just documentation
+
+---
+
 *Sovereign Source License v1.0 — © 2026 Ahmad Ali Parr*
 *Cannot be extracted or used to train commercial models without written license from the Principal.*

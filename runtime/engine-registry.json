@@ -1,0 +1,21 @@
+{
+  "engines": [
+    {
+      "id": "nemotron_reasoner",
+      "role": "reasoning",
+      "attach_mode": "fsm",
+      "kernels": ["carto_kernel", "cobol_law_kernel", "rexx_glue_kernel"]
+    },
+    {
+      "id": "gemini_news",
+      "role": "research",
+      "attach_mode": "net",
+      "domains": ["law_results", "corporate_creations", "articles", "logic"]
+    },
+    {
+      "id": "carto_auditor",
+      "role": "audit",
+      "attach_mode": "local"
+    }
+  ]
+}

@@ -173,6 +173,138 @@
       line-height: 1.6;
     }
 
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .team-card {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      padding: 1.6rem;
+    }
+
+    .team-role {
+      font-family: 'Courier New', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .team-lang {
+      font-size: 1.1rem;
+      color: var(--gold-bright);
+      margin-bottom: 0.7rem;
+    }
+
+    .team-copy {
+      font-size: 0.9rem;
+      color: rgba(240,232,208,0.68);
+      line-height: 1.7;
+    }
+
+    .guide-grid,
+    .interactive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+
+    .guide-card,
+    .interactive-card {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      padding: 1.4rem;
+    }
+
+    .guide-card a {
+      color: var(--gold-bright);
+      text-decoration: none;
+    }
+
+    .guide-card p,
+    .interactive-card p {
+      margin-top: 0.7rem;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: rgba(240,232,208,0.68);
+    }
+
+    .mode-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .mode-btn {
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid var(--border);
+      padding: 0.75rem 1rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .mode-btn.active {
+      background: rgba(212,175,55,0.14);
+      border-color: var(--gold);
+      color: var(--gold-bright);
+    }
+
+    .interactive-shell {
+      background: var(--dark2);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+    }
+
+    .path-line {
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem;
+      color: rgba(240,232,208,0.72);
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+
+    .output-panel {
+      background: var(--dark3);
+      border: 1px solid var(--border);
+      padding: 1.2rem;
+      min-height: 220px;
+    }
+
+    .output-title {
+      font-family: 'Courier New', monospace;
+      color: var(--gold);
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .output-panel ul {
+      list-style: none;
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .output-panel li {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: rgba(240,232,208,0.75);
+      border-left: 2px solid rgba(212,175,55,0.35);
+      padding-left: 0.8rem;
+    }
+
     /* ── VAULT PARTNERSHIP ───────────────────────────────────────── */
     .vault-section {
       background: var(--dark2);
@@ -353,7 +485,7 @@
   <!-- TICKER -->
   <div class="ticker">
     <span class="ticker-inner">
-      CARTO ONLINE ⚖️ CARTOGRAPHER AGENT · SOVEREIGN LAW ENGINE · WORM-SEALED CORPUS · 64 TRAINING ENTRIES · 9 CHAPTERS · FCRA · ACH · NACHA · BANKRUPTCY CH11/CH13 · UCC-1 · MOORISH TRUST FRAMEWORK · IRS CATCODE DEFENSE · VAULT PARTNERSHIP ACTIVE · PETITION → ESTATE → STAY → PLAN → CONFIRMATION → DISCHARGE · WORM TRACE SEALED · CARTO ONLINE ⚖️ CARTOGRAPHER AGENT · SOVEREIGN LAW ENGINE ·
+      CARTO ONLINE ⚖️ CARTOGRAPHER AGENT · SOVEREIGN LAW ENGINE · WORM-SEALED CORPUS · 66 TRAINING ENTRIES · 9 CHAPTERS · COBOL LAW KERNEL · REXX GLUE KERNEL · FCRA · ACH · NACHA · BANKRUPTCY CH11/CH13 · UCC-1 · MOORISH TRUST FRAMEWORK · IRS CATCODE DEFENSE · VAULT PARTNERSHIP ACTIVE · PETITION → ESTATE → STAY → PLAN → CONFIRMATION → DISCHARGE · WORM TRACE SEALED · CARTO ONLINE ⚖️ CARTOGRAPHER AGENT · SOVEREIGN LAW ENGINE ·
     </span>
   </div>
 
@@ -371,6 +503,34 @@
       <a href="https://github.com/SNAPKITTYWEST/cartographer-agent" class="btn outline">View Corpus</a>
     </div>
   </section>
+
+  <div class="section">
+    <p class="section-label">⌘ Guides</p>
+    <h2 class="section-title">Operator docs, architecture, and frontend notes</h2>
+    <p class="section-desc">This repo now carries enough structure that the docs need to be first-class. These are the fastest paths into the system.</p>
+    <div class="guide-grid">
+      <div class="guide-card">
+        <div class="team-role">Operator Guide</div>
+        <div class="team-lang"><a href="USER_GUIDE.md">User Guide</a></div>
+        <p>What the system is, how the kernel lanes split, and how to think about routing work through CARTO, COBOL, and REXX.</p>
+      </div>
+      <div class="guide-card">
+        <div class="team-role">Repo Shape</div>
+        <div class="team-lang"><a href="SYSTEM_ARCHITECTURE.md">System Architecture</a></div>
+        <p>Module boundaries, runtime separation, production claims, and what still remains scaffolded.</p>
+      </div>
+      <div class="guide-card">
+        <div class="team-role">Pages Surface</div>
+        <div class="team-lang"><a href="FRONTEND_GUIDE.md">Frontend Guide</a></div>
+        <p>How the GitHub Pages scaffold is meant to evolve into the actual operator surface without leaving static hosting.</p>
+      </div>
+      <div class="guide-card">
+        <div class="team-role">Ceremonial Layer</div>
+        <div class="team-lang"><a href="SHAKESPEAREAN_LAYER.md">Shakespearean Layer</a></div>
+        <p>A British dramatic drafting surface for summons, deeds, and legal voice without replacing the operative governance stack.</p>
+      </div>
+    </div>
+  </div>
 
   <!-- DOMAINS -->
   <div class="section">
@@ -428,11 +588,11 @@
 
     <!-- CORPUS STATS -->
     <div class="stats-grid">
-      <div class="stat-card"><span class="stat-number">64</span><span class="stat-label">Training Entries</span></div>
+      <div class="stat-card"><span class="stat-number">66</span><span class="stat-label">Training Entries</span></div>
       <div class="stat-card"><span class="stat-number">9</span><span class="stat-label">Corpus Chapters</span></div>
       <div class="stat-card"><span class="stat-number">7</span><span class="stat-label">Prolog Predicates</span></div>
       <div class="stat-card"><span class="stat-number">12</span><span class="stat-label">IRS CatCodes</span></div>
-      <div class="stat-card"><span class="stat-number">1</span><span class="stat-label">Evoked Persona</span></div>
+      <div class="stat-card"><span class="stat-number">3</span><span class="stat-label">Language Kernels</span></div>
     </div>
   </div>
 
@@ -462,6 +622,145 @@
   consumer_account(Consumer),
   \+ authorization_exists(Consumer),
   Rights = [return_mandatory, window_days(60), odfi_bears_risk].
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="section-label">❦ Shakespearean Layer</p>
+    <h2 class="section-title">The ceremonial legal voice</h2>
+    <p class="section-desc">A British dramatic code surface for the law team. It gives summons, governance, and legal posture a rhetorical layer without replacing the actual kernel, fabric, or deed authority.</p>
+    <div class="code-block">
+<span class="code-comment">When CARTO doth survey the matter,</span>
+<span class="code-comment">let the kernel be chosen by the weight of law.</span>
+
+<span class="code-comment">If the dispute soundeth in standing and breach,</span>
+<span class="code-comment">send it unto Prolog.</span>
+
+<span class="code-comment">If the work be packet, ledger, or notice,</span>
+<span class="code-comment">send it unto COBOL.</span>
+
+<span class="code-comment">If authority be doubted,</span>
+<span class="code-comment">raise the Trust Deed before all action.</span>
+    </div>
+    <div class="cta-row" style="justify-content:flex-start; margin-top: 2rem;">
+      <a href="shakespearean-code.html" class="btn outline">Open Shakespearean Page</a>
+    </div>
+  </div>
+
+  <!-- DIGITAL LAW TEAM -->
+  <div class="section">
+    <p class="section-label">⌘ Digital Law Team</p>
+    <h2 class="section-title">CARTO now carries a three-kernel layer.</h2>
+    <p class="section-desc">Prolog handles legal reasoning. COBOL handles procedural legal business operations. REXX handles docket automation and host-side workflow glue.</p>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-role">Reasoning Kernel</div>
+        <div class="team-lang">CARTO / Prolog Kernel</div>
+        <div class="team-copy">Standing, fiduciary breach, dispute grounds, trust classification, and sovereign entity mapping.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-role">Procedure Kernel</div>
+        <div class="team-lang">COBOL Law Kernel</div>
+        <div class="team-copy">Claim ledgers, trust account statements, notice batches, and institution-shaped fixed-format business procedure.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-role">Glue Kernel</div>
+        <div class="team-lang">REXX Glue Kernel</div>
+        <div class="team-copy">Docket automation, records routing, host scripting, and repeatable legal office workflow glue.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REASONING FABRIC -->
+  <div style="background: var(--dark2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="section" style="padding-top: 4rem; padding-bottom: 4rem;">
+      <p class="section-label">⛓ Reasoning Fabric</p>
+      <h2 class="section-title">Attach engines. Audit. Summon. Spawn. Seal.</h2>
+      <p class="section-desc">CARTO stays the auditor. REXX moves the engine across the net lanes. Nemotron attaches through a Tokio FSM and spawns meta-lawyers from the kernel set.</p>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-role">Audit Gate</div>
+          <div class="team-lang">CARTO Auditor</div>
+          <div class="team-copy">Deterministic legal audit over the corpus before any summon or spawn path opens.</div>
+        </div>
+        <div class="team-card">
+          <div class="team-role">Net Engine</div>
+          <div class="team-lang">Nemotron + Gemini News</div>
+          <div class="team-copy">Synthesis, current law results, corporate creation context, articles, and net-facing reasoning.</div>
+        </div>
+        <div class="team-card">
+          <div class="team-role">Lifecycle Control</div>
+          <div class="team-lang">Tokio FSM + REXX</div>
+          <div class="team-copy">Attach engine, route summon envelopes, spawn meta-lawyers, and seal receipts into the WORM lane.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRUST DEED MODULE -->
+  <div class="section">
+    <p class="section-label">✦ Trust Deed Module</p>
+    <h2 class="section-title">Generate deed. Govern action. Seal authority.</h2>
+    <p class="section-desc">The trust deed layer sits above summon and spawn. It generates deeds on the spot, gates corporate creation and legal escalation, and enforces the governance protocol before anything becomes authoritative.</p>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-role">Deed Generation</div>
+        <div class="team-lang">On-The-Spot Deeds</div>
+        <div class="team-copy">Generate sovereign, corporate, and meta-lawyer trust deeds with scope, trustee, beneficiary, powers, and seal fields.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-role">Governance Gate</div>
+        <div class="team-lang">Authority Protocol</div>
+        <div class="team-copy">No summon, spawn, or storage path becomes active without deed status, escalation status, and governance checks passing.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-role">Corporate Control</div>
+        <div class="team-lang">COBOL + CARTO</div>
+        <div class="team-copy">Corporate creations, records packets, and legal escalations are deed-bound before procedure begins.</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background: var(--dark2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="section" style="padding-top: 4rem; padding-bottom: 4rem;">
+      <p class="section-label">◈ Interaction Scaffold</p>
+      <h2 class="section-title">Explore the law-team flow from the browser</h2>
+      <p class="section-desc">This is a static operator scaffold for GitHub Pages. It does not call the runtime yet, but it maps the exact paths the runtime is expected to enforce.</p>
+      <div class="interactive-shell">
+        <div class="mode-row">
+          <button class="mode-btn active" data-mode="kernel">Kernel Route</button>
+          <button class="mode-btn" data-mode="reasoning">Reasoning Fabric</button>
+          <button class="mode-btn" data-mode="deed">Trust Deed Gate</button>
+        </div>
+        <div id="path-line" class="path-line">MATTER -> CARTO AUDIT -> KERNEL SELECTION -> PROCEDURE OR REASONING OUTPUT</div>
+        <div class="interactive-grid">
+          <div class="interactive-card">
+            <div class="team-role">Current Mode</div>
+            <div id="mode-name" class="team-lang">Kernel Route</div>
+            <p id="mode-copy">Use this when the operator already knows whether the work belongs in legal reasoning, corporate procedure, or workflow glue.</p>
+          </div>
+          <div class="interactive-card">
+            <div class="team-role">Primary Actor</div>
+            <div id="mode-actor" class="team-lang">CARTO / COBOL / REXX</div>
+            <p id="mode-actor-copy">The kernel team reads one shared corpus through split logic profiles.</p>
+          </div>
+          <div class="interactive-card">
+            <div class="team-role">Output Type</div>
+            <div id="mode-output" class="team-lang">Classified Legal Work</div>
+            <p id="mode-output-copy">Standing analysis, records packet, or workflow route depending on the selected lane.</p>
+          </div>
+        </div>
+        <div class="output-panel" style="margin-top: 1.5rem;">
+          <div class="output-title">Expected Runtime Behavior</div>
+          <ul id="mode-list">
+            <li>Audit the matter before the lane is treated as authoritative.</li>
+            <li>Select Prolog, COBOL, or REXX based on the type of legal work.</li>
+            <li>Seal the path when the action is complete.</li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -529,6 +828,79 @@
     </p>
     <p style="margin-top:0.5rem;">Sovereign Source License v1.0 · © 2026 Ahmad Ali Parr</p>
   </footer>
+
+  <script>
+    const modeData = {
+      kernel: {
+        path: "MATTER -> CARTO AUDIT -> KERNEL SELECTION -> PROCEDURE OR REASONING OUTPUT",
+        name: "Kernel Route",
+        copy: "Use this when the operator already knows whether the work belongs in legal reasoning, corporate procedure, or workflow glue.",
+        actor: "CARTO / COBOL / REXX",
+        actorCopy: "The kernel team reads one shared corpus through split logic profiles.",
+        output: "Classified Legal Work",
+        outputCopy: "Standing analysis, records packet, or workflow route depending on the selected lane.",
+        list: [
+          "Audit the matter before the lane is treated as authoritative.",
+          "Select Prolog, COBOL, or REXX based on the type of legal work.",
+          "Seal the path when the action is complete."
+        ]
+      },
+      reasoning: {
+        path: "AUDIT READY -> ATTACH ENGINE -> SUMMON ROUTE -> META-LAWYER SPAWN -> WORM SEAL",
+        name: "Reasoning Fabric",
+        copy: "Use this when the matter needs external synthesis, current law results, or a spawned meta-lawyer profile.",
+        actor: "Nemotron + Gemini News",
+        actorCopy: "REXX routes the call, CARTO audits, and the FSM controls the state path.",
+        output: "Attached Engine Path",
+        outputCopy: "Current-results research, synthesis, spawn profile, and controlled seal path.",
+        list: [
+          "Attach the correct engine only after the audit gate passes.",
+          "Route summons through the envelope contract rather than direct improvisation.",
+          "Spawn only through a declared profile and finish with a sealed receipt."
+        ]
+      },
+      deed: {
+        path: "ACTION REQUEST -> DEED GENERATION -> AUTHORITY CHECK -> ESCALATION CHECK -> STORE OR BLOCK",
+        name: "Trust Deed Gate",
+        copy: "Use this when the system needs action authority for corporate creation, escalation, or spawned meta-lawyer control.",
+        actor: "Trust Deed Module",
+        actorCopy: "The deed layer sits above summon and spawn and decides whether authority exists.",
+        output: "Authorized Or Blocked",
+        outputCopy: "A deed-bound action path with explicit scope, trustee, restrictions, and seal.",
+        list: [
+          "Generate or attach the correct deed class before the action continues.",
+          "Block actions outside deed scope or actions that fail escalation status.",
+          "Never allow runtime trustee or deed override from prompt input."
+        ]
+      }
+    };
+
+    const buttons = document.querySelectorAll(".mode-btn");
+    const pathLine = document.getElementById("path-line");
+    const modeName = document.getElementById("mode-name");
+    const modeCopy = document.getElementById("mode-copy");
+    const modeActor = document.getElementById("mode-actor");
+    const modeActorCopy = document.getElementById("mode-actor-copy");
+    const modeOutput = document.getElementById("mode-output");
+    const modeOutputCopy = document.getElementById("mode-output-copy");
+    const modeList = document.getElementById("mode-list");
+
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        buttons.forEach((btn) => btn.classList.remove("active"));
+        button.classList.add("active");
+        const data = modeData[button.dataset.mode];
+        pathLine.textContent = data.path;
+        modeName.textContent = data.name;
+        modeCopy.textContent = data.copy;
+        modeActor.textContent = data.actor;
+        modeActorCopy.textContent = data.actorCopy;
+        modeOutput.textContent = data.output;
+        modeOutputCopy.textContent = data.outputCopy;
+        modeList.innerHTML = data.list.map((item) => `<li>${item}</li>`).join("");
+      });
+    });
+  </script>
 
 </body>
 </html>
