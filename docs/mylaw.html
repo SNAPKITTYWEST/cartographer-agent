@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>MyLaw — Know Your Rights</title>
+<meta name="description" content="Free legal analysis tool. Know your rights on debt collection, credit disputes, ACH unauthorized charges, trust law, and IRS audits."/>
+<meta property="og:title" content="MyLaw — Know Your Rights"/>
+<meta property="og:description" content="Free sovereign law engine. FCRA · FDCPA · NACHA · Trust Law · IRS Defense."/>
+<script src="https://cdn.jsdelivr.net/npm/tau-prolog@0.3.2/modules/core.js"></script>
+<meta property="fb:app_id" content="REPLACE_FB_APP_ID"/>
+<script async defer crossorigin="anonymous"
+  src="https://connect.facebook.net/en_US/sdk.js"></script>
+<style>
+/* ── RESET ── */
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#e9eaed;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#1c1e21;min-height:100vh}
+a{color:#3b5998;text-decoration:none}
+a:hover{text-decoration:underline}
+input,select,textarea,button{font-family:Arial,Helvetica,sans-serif;font-size:13px}
+
+/* ── TOP NAV ── */
+#topbar{background:#3b5998;height:44px;display:flex;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+#topbar-inner{max-width:980px;margin:0 auto;width:100%;padding:0 8px;display:flex;align-items:center;gap:0}
+.top-logo{color:#fff;font-size:20px;font-weight:700;letter-spacing:-0.5px;margin-right:8px;white-space:nowrap}
+.top-logo span{color:#c8d8f0;font-size:12px;font-weight:400;margin-left:6px;letter-spacing:0}
+#top-search{flex:1;max-width:400px;height:28px;border:1px solid #8a9cc4;background:#fff;padding:0 10px;border-radius:3px;outline:none;font-size:13px;color:#333;margin-right:16px}
+#top-search:focus{border-color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.3)}
+.top-nav{display:flex;gap:2px;margin-left:auto}
+.top-nav a{color:#d8e4f5;font-size:12px;padding:6px 10px;border-radius:3px;white-space:nowrap}
+.top-nav a:hover,.top-nav a.active{background:rgba(255,255,255,.15);color:#fff;text-decoration:none}
+
+/* ── LAYOUT ── */
+#page{max-width:980px;margin:16px auto;padding:0 8px;display:grid;grid-template-columns:200px 1fr 224px;gap:16px;align-items:start}
+
+/* ── LEFT COLUMN ── */
+.l-box{background:#fff;border:1px solid #dddfe2;padding:0;margin-bottom:12px}
+.l-box-hdr{background:#6d84b4;color:#fff;font-weight:700;font-size:12px;padding:6px 10px;letter-spacing:.3px}
+.l-box-hdr.gold{background:#3b5998}
+.l-nav-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-bottom:1px solid #f0f0f0;cursor:pointer;color:#3b5998;font-size:12px}
+.l-nav-item:last-child{border-bottom:none}
+.l-nav-item:hover{background:#f0f2f5}
+.l-nav-item.active{background:#e8edf5;font-weight:700;color:#1a3a7a}
+.l-nav-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.l-info-row{padding:6px 10px;font-size:11px;color:#65676b;border-bottom:1px solid #f5f5f5;line-height:1.4}
+.l-info-row:last-child{border-bottom:none}
+.l-info-label{color:#1c1e21;font-weight:700}
+.worm-mini{padding:6px 10px;font-size:10px;color:#65676b;line-height:1.6;border-bottom:1px solid #f5f5f5}
+.worm-mini:last-child{border-bottom:none}
+.worm-hash{color:#3b5998;font-size:9px;font-family:'Courier New',monospace}
+.worm-state{padding:7px 10px;font-size:11px;border-bottom:1px solid #f5f5f5}
+.worm-state.active{color:#2e7d32;font-weight:700}
+.worm-state.idle{color:#65676b}
+
+/* ── MAIN COLUMN ── */
+.share-box{background:#fff;border:1px solid #dddfe2;padding:12px;margin-bottom:12px}
+.share-box-hdr{font-size:11px;color:#65676b;margin-bottom:8px;font-weight:700;letter-spacing:.3px;text-transform:uppercase}
+.matter-tabs{display:flex;border-bottom:1px solid #dddfe2;margin-bottom:12px;gap:0}
+.matter-tab{padding:8px 14px;font-size:12px;color:#65676b;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px}
+.matter-tab:hover{color:#3b5998;background:#f0f2f5}
+.matter-tab.active{color:#3b5998;font-weight:700;border-bottom-color:#3b5998}
+textarea.wall-input{width:100%;border:1px solid #dddfe2;padding:10px;resize:none;outline:none;font-size:13px;line-height:1.5;color:#1c1e21;background:#f7f8fa;border-radius:2px}
+textarea.wall-input:focus{border-color:#3b5998;background:#fff;box-shadow:0 0 0 2px rgba(59,89,152,.1)}
+select.wall-select{width:100%;border:1px solid #dddfe2;padding:8px 10px;outline:none;background:#f7f8fa;color:#1c1e21;cursor:pointer;border-radius:2px;margin-bottom:8px}
+select.wall-select:focus{border-color:#3b5998}
+.btn-primary{background:#3b5998;color:#fff;border:1px solid #2d4373;padding:7px 16px;cursor:pointer;font-weight:700;font-size:13px;border-radius:3px}
+.btn-primary:hover{background:#2d4373}
+.btn-primary:disabled{background:#9ba8c5;border-color:#9ba8c5;cursor:not-allowed}
+.btn-secondary{background:#f7f8fa;color:#4b4f56;border:1px solid #ccd0d5;padding:7px 14px;cursor:pointer;font-size:12px;border-radius:3px}
+.btn-secondary:hover{background:#e8edf5;color:#3b5998}
+.btn-ghost{background:none;color:#3b5998;border:none;padding:4px 8px;cursor:pointer;font-size:11px}
+.btn-ghost:hover{text-decoration:underline}
+.action-row{display:flex;align-items:center;gap:8px;padding-top:10px;border-top:1px solid #f0f0f0;margin-top:10px}
+.action-row .right{margin-left:auto}
+.feed-toolbar{display:none;align-items:center;justify-content:flex-end;margin:0 0 8px}
+.feed-toolbar.active{display:flex}
+.field-error{margin-top:4px;font-size:11px;color:#b71c1c;line-height:1.4}
+.input-error{border-color:#b71c1c !important;box-shadow:0 0 0 2px rgba(183,28,28,.08)}
+
+/* ── WALL POSTS (results) ── */
+.post{background:#fff;border:1px solid #dddfe2;margin-bottom:12px}
+.post-hdr{padding:10px 12px 6px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #f0f2f5}
+.post-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.post-meta{flex:1}
+.post-author{font-weight:700;color:#3b5998;font-size:13px}
+.post-time{font-size:11px;color:#8a8d91}
+.post-body{padding:10px 12px}
+.post-close{background:none;border:none;color:#8a8d91;font-size:18px;line-height:1;cursor:pointer;padding:4px;margin-left:auto;min-width:24px}
+.post-close:hover{color:#3b5998}
+.post-section-hdr{font-size:10px;color:#8a8d91;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin:10px 0 6px;padding-top:10px;border-top:1px solid #f0f2f5}
+.post-section-hdr:first-child{margin-top:0;padding-top:0;border-top:none}
+.result-row{display:flex;align-items:baseline;gap:8px;padding:4px 0;border-bottom:1px solid #f7f7f7;font-size:12px}
+.result-row:last-child{border-bottom:none}
+.result-ok{color:#2e7d32;font-weight:700}
+.result-fail{color:#9e9e9e}
+.result-type{color:#8a8d91;font-size:10px;min-width:80px;font-family:'Courier New',monospace}
+.result-value{color:#1c1e21;flex:1}
+.rexx-row{display:flex;align-items:center;gap:6px;padding:3px 0}
+.rexx-cmd{font-family:'Courier New',monospace;font-size:11px;color:#1a3a7a;flex:1;background:#f0f2f5;padding:4px 8px;border-radius:2px}
+.copy-mini{background:none;border:1px solid #ccd0d5;color:#65676b;padding:2px 7px;font-size:10px;cursor:pointer;border-radius:2px}
+.copy-mini:hover{background:#e8edf5;color:#3b5998}
+.copy-mini.done{color:#2e7d32;border-color:#2e7d32}
+.statute-card{padding:8px;background:#f7f8fa;border:1px solid #dddfe2;margin-bottom:6px;border-radius:2px}
+.statute-cite{font-weight:700;color:#1c1e21;font-size:12px}
+.statute-desc{color:#65676b;font-size:11px;margin-top:2px}
+.statute-link{font-size:11px;color:#3b5998;margin-top:4px;display:inline-block}
+.prolog-fact{font-family:'Courier New',monospace;font-size:10px;color:#6d84b4;display:block;padding:1px 0}
+.seal-badge{font-family:'Courier New',monospace;font-size:10px;color:#8a8d91;background:#f0f2f5;padding:3px 8px;border-radius:2px;display:inline-block;margin-top:6px}
+.post-footer{padding:6px 12px;background:#f7f8fa;border-top:1px solid #dddfe2;display:flex;gap:10px;align-items:center}
+.post-footer-action{color:#8a8d91;font-size:11px;cursor:pointer}
+.post-footer-action:hover{color:#3b5998;text-decoration:underline}
+
+/* deed output */
+.deed-pre{font-family:Georgia,serif;font-size:11px;line-height:1.8;color:#1c1e21;white-space:pre-wrap;padding:12px;background:#fffef7;border:1px solid #e0ddd0;max-height:260px;overflow-y:auto}
+.deed-pre-code{font-family:'Courier New',monospace;font-size:10px;line-height:1.6;color:#1a3a7a;white-space:pre-wrap;padding:12px;background:#f0f2f5;border:1px solid #dddfe2;max-height:220px;overflow-y:auto}
+.deed-dl-row{display:flex;gap:8px;margin:8px 0}
+
+/* error */
+.error-box{background:#fff3cd;border:1px solid #ffc107;padding:10px 12px;color:#856404;font-size:12px;border-radius:2px;margin-bottom:8px}
+.disclaimer{margin-top:6px;color:#8a8d91;font-size:12px;line-height:1.5}
+
+/* loading shimmer */
+.loading-post{background:#fff;border:1px solid #dddfe2;padding:16px;margin-bottom:12px;text-align:center;color:#8a8d91;font-size:12px}
+
+/* ── RIGHT COLUMN ── */
+.r-box{background:#fff;border:1px solid #dddfe2;padding:0;margin-bottom:12px}
+.r-box-hdr{background:#3b5998;color:#fff;font-weight:700;font-size:12px;padding:6px 10px}
+.r-box-body{padding:10px}
+.r-source{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid #f0f0f0;font-size:12px}
+.r-source:last-child{border-bottom:none}
+.r-source-icon{width:28px;height:28px;border-radius:3px;background:#3b5998;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;flex-shrink:0}
+.r-source-name{font-weight:700;color:#1c1e21;line-height:1.3}
+.r-source-desc{color:#65676b;font-size:11px}
+.r-ad-box{background:#f7f8fa;border:1px solid #dddfe2;padding:10px;margin-bottom:12px;font-size:11px;color:#8a8d91}
+.r-ad-hdr{font-size:10px;color:#8a8d91;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px}
+.r-stat{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #f0f0f0;font-size:11px}
+.r-stat:last-child{border-bottom:none}
+.r-stat-label{color:#65676b}
+.r-stat-value{font-weight:700;color:#3b5998;font-family:'Courier New',monospace}
+
+/* ── BOB CHAT BUBBLE ── */
+#bob-bar{position:fixed;bottom:0;right:20px;width:260px;z-index:200;font-family:Arial,Helvetica,sans-serif}
+#bob-tab{background:#3b5998;color:#fff;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;border-radius:4px 4px 0 0;border:1px solid #2d4373}
+#bob-tab-name{font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px}
+#bob-tab-dot{width:8px;height:8px;border-radius:50%;background:#44b700;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+#bob-chevron{font-size:11px;transition:transform .2s}
+#bob-window{background:#fff;border:1px solid #2d4373;border-top:none;border-radius:0 0 4px 4px;display:flex;flex-direction:column;height:360px}
+#bob-messages{flex:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:8px}
+.bob-msg{max-width:88%;padding:7px 10px;font-size:12px;line-height:1.5;border-radius:4px}
+.bob-msg.from-bob{background:#e8edf5;color:#1c1e21;align-self:flex-start;border:1px solid #dddfe2}
+.bob-msg.from-user{background:#3b5998;color:#fff;align-self:flex-end}
+.bob-msg.system{background:#fff3cd;color:#856404;border:1px solid #ffc107;font-size:11px;align-self:center;text-align:center}
+#bob-input-row{padding:8px;border-top:1px solid #dddfe2;display:flex;gap:6px}
+#bob-input{flex:1;border:1px solid #dddfe2;padding:6px 8px;outline:none;font-size:12px;border-radius:2px}
+#bob-input:focus{border-color:#3b5998}
+#bob-send{background:#3b5998;color:#fff;border:none;padding:6px 12px;cursor:pointer;font-size:12px;border-radius:2px}
+#bob-send:hover{background:#2d4373}
+.collapsed #bob-window{display:none}
+.collapsed #bob-chevron{transform:rotate(180deg)}
+
+/* ── FOOTER ── */
+#footer{max-width:980px;margin:0 auto;padding:16px 8px 60px;font-size:11px;color:#8a8d91;border-top:1px solid #dddfe2;margin-top:8px}
+#footer a{color:#8a8d91}
+#footer a:hover{text-decoration:underline}
+.footer-links{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px}
+
+/* ── CARTO FINANCIAL CHAT ── */
+#carto-bar{position:fixed;bottom:0;right:300px;width:280px;z-index:200;font-family:Arial,Helvetica,sans-serif}
+#carto-tab{background:#2e7d32;color:#fff;padding:8px 12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;border-radius:4px 4px 0 0;border:1px solid #1b5e20}
+#carto-tab-name{font-weight:700;font-size:13px;display:flex;align-items:center;gap:6px}
+#carto-tab-dot{width:8px;height:8px;border-radius:50%;background:#ffd600;animation:pulse 2s infinite}
+#carto-chevron{font-size:11px;transition:transform .2s}
+#carto-window{background:#fff;border:1px solid #1b5e20;border-top:none;border-radius:0 0 4px 4px;display:flex;flex-direction:column;height:360px}
+#carto-messages{flex:1;overflow-y:auto;padding:10px;display:flex;flex-direction:column;gap:8px}
+.carto-msg{max-width:90%;padding:7px 10px;font-size:12px;line-height:1.5;border-radius:4px}
+.carto-msg.from-carto{background:#e8f5e9;color:#1c1e21;align-self:flex-start;border:1px solid #c8e6c9}
+.carto-msg.from-user{background:#2e7d32;color:#fff;align-self:flex-end}
+.carto-cite{background:#fff8e1;border:1px solid #ffd600;padding:4px 8px;font-size:10px;font-family:'Courier New',monospace;color:#856404;border-radius:2px;align-self:flex-start;max-width:90%;line-height:1.6;margin-top:2px}
+#carto-input-row{padding:8px;border-top:1px solid #c8e6c9;display:flex;gap:6px}
+#carto-input{flex:1;border:1px solid #c8e6c9;padding:6px 8px;outline:none;font-size:12px;border-radius:2px}
+#carto-input:focus{border-color:#2e7d32}
+#carto-send{background:#2e7d32;color:#fff;border:none;padding:6px 12px;cursor:pointer;font-size:12px;border-radius:2px}
+#carto-send:hover{background:#1b5e20}
+#carto-bar.collapsed #carto-window{display:none}
+#carto-bar.collapsed #carto-chevron{transform:rotate(180deg)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:760px){
+  #page{grid-template-columns:1fr}
+  .l-col,.r-col{display:none}
+  #bob-bar{right:8px;width:calc(50% - 12px)}
+  #carto-bar{right:auto;left:8px;width:calc(50% - 12px)}
+  #carto-window,#bob-window{height:280px}
+}
+@media(max-width:600px){
+  .matter-tabs{overflow-x:auto;white-space:nowrap;display:block;padding-bottom:2px}
+  .matter-tab{display:inline-block}
+}
+@media(max-width:760px){
+  button,.matter-tab,.top-nav a,.l-nav-item,#bob-send,#bob-tab,#carto-send,#carto-tab{min-height:44px}
+  .action-row{flex-wrap:wrap}
+  .action-row .right{margin-left:0;width:100%}
+}
+@media(max-width:480px){
+  #carto-bar{display:none}
+  #bob-bar{right:8px;width:calc(100% - 16px)}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <div id="topbar-inner">
+    <div class="top-logo">MyLaw <span>Know Your Rights</span></div>
+    <input type="text" id="top-search" aria-label="Search legal topics" placeholder="Search laws, statutes, case types..."/>
+    <nav class="top-nav">
+      <div id="fb-login-slot" style="margin-left:8px">
+        <button class="btn-secondary" id="fb-login-btn" onclick="fbLogin()" style="font-size:12px;padding:5px 12px;white-space:nowrap">
+          Login with Facebook
+        </button>
+        <span id="fb-user-name" style="color:#d8e4f5;font-size:12px;display:none"></span>
+      </div>
+      <a href="#" onclick="focusTab('standing');return false">Analyse</a>
+      <a href="#" onclick="focusTab('deed');return false">Deed Forge</a>
+      <a href="#" onclick="focusTab('research');return false">Research</a>
+      <a href="carto-live.html">CARTO Engine</a>
+    </nav>
+  </div>
+</div>
+
+<div id="page">
+
+  <!-- LEFT COLUMN -->
+  <div class="l-col">
+    <div class="l-box">
+      <div class="l-box-hdr">Legal Matters</div>
+      <div class="l-nav-item active" onclick="focusTab('standing');setNav(this)"><span class="l-nav-dot" style="background:#2e7d32"></span>Standing Analysis</div>
+      <div class="l-nav-item" onclick="focusTab('ach');setNav(this)"><span class="l-nav-dot" style="background:#1565c0"></span>ACH / Bank Dispute</div>
+      <div class="l-nav-item" onclick="focusTab('zombie');setNav(this)"><span class="l-nav-dot" style="background:#b71c1c"></span>Zombie Debt</div>
+      <div class="l-nav-item" onclick="focusTab('trust');setNav(this)"><span class="l-nav-dot" style="background:#6a1b9a"></span>Trust Law</div>
+      <div class="l-nav-item" onclick="focusTab('irs');setNav(this)"><span class="l-nav-dot" style="background:#e65100"></span>IRS Audit</div>
+      <div class="l-nav-item" onclick="focusTab('deed');setNav(this)"><span class="l-nav-dot" style="background:#3b5998"></span>Deed Forge</div>
+    </div>
+
+    <div class="l-box">
+      <div class="l-box-hdr gold">Law Sources</div>
+      <div class="l-info-row"><span class="l-info-label">Cornell LII</span><br>United States Code</div>
+      <div class="l-info-row"><span class="l-info-label">NACHA</span><br>ACH Operating Rules</div>
+      <div class="l-info-row"><span class="l-info-label">Lawpedia</span><br>Plain-language guides</div>
+      <div class="l-info-row"><span class="l-info-label">Nolo</span><br>Consumer legal guides</div>
+      <div class="l-info-row"><span class="l-info-label">UTC</span><br>Uniform Trust Code</div>
+    </div>
+
+    <div class="l-box">
+      <div class="l-box-hdr">WORM Chain</div>
+      <div id="worm-state" class="worm-state idle">Chain not started</div>
+      <div style="padding:7px 10px;font-size:11px;color:#65676b"><span id="worm-count-l">0 records sealed</span></div>
+      <div id="worm-left"></div>
+    </div>
+  </div>
+
+  <!-- MAIN COLUMN -->
+  <div class="main-col">
+
+    <!-- INPUT BOX -->
+    <div class="share-box">
+      <div class="share-box-hdr">What is your legal matter?</div>
+      <div class="matter-tabs" id="matter-tabs" role="tablist" aria-label="Legal matter types">
+        <div class="matter-tab active" role="tab" aria-selected="true" tabindex="0" onclick="switchTab(this,'standing')">Standing</div>
+        <div class="matter-tab" role="tab" aria-selected="false" tabindex="0" onclick="switchTab(this,'ach')">ACH / Bank</div>
+        <div class="matter-tab" role="tab" aria-selected="false" tabindex="0" onclick="switchTab(this,'zombie')">Zombie Debt</div>
+        <div class="matter-tab" role="tab" aria-selected="false" tabindex="0" onclick="switchTab(this,'trust')">Trust</div>
+        <div class="matter-tab" role="tab" aria-selected="false" tabindex="0" onclick="switchTab(this,'irs')">IRS</div>
+        <div class="matter-tab" role="tab" aria-selected="false" tabindex="0" onclick="switchTab(this,'deed')">Deed Forge</div>
+      </div>
+
+      <!-- STANDING -->
+      <div id="tab-standing">
+        <label for="in-standing" style="display:block;font-size:11px;color:#65676b;margin-bottom:3px;font-weight:700">CASE DETAILS</label>
+        <textarea class="wall-input" id="in-standing" aria-label="Describe your legal situation" rows="4" placeholder="Describe your situation in plain language. Example: A debt collector is trying to collect a debt from 2018. They changed the date on my credit report. I never agreed to this account."></textarea>
+        <div class="action-row">
+          <button class="btn-primary" id="btn-run" aria-label="Analyse my legal case" onclick="runAnalysis()">Analyse My Case</button>
+          <button class="btn-secondary" aria-label="Clear current legal inputs" onclick="clearAll()">Clear</button>
+          <span class="right" style="font-size:11px;color:#8a8d91">Powered by Tau Prolog · DFA · WORM</span>
+        </div>
+      </div>
+
+      <!-- ACH -->
+      <div id="tab-ach" style="display:none">
+        <label for="in-ach-code" style="display:block;font-size:11px;color:#65676b;margin-bottom:3px;font-weight:700">RETURN CODE</label>
+        <select class="wall-select" id="in-ach-code" aria-label="Select ACH return code">
+          <option value="R10">R10 — My bank account was charged without my authorization</option>
+          <option value="R07">R07 — I revoked authorization and they charged me anyway</option>
+          <option value="R05">R05 — Wrong transaction type used (NACHA SEC code violation)</option>
+          <option value="R02">R02 — Account was closed when charge was attempted</option>
+        </select>
+        <label for="in-ach-facts" style="display:block;font-size:11px;color:#65676b;margin-bottom:3px;font-weight:700">ACH FACTS</label>
+        <textarea class="wall-input" id="in-ach-facts" aria-label="Describe the ACH dispute facts" rows="3" placeholder="Describe what happened. When was the charge? Did you send a revocation notice? What bank is involved?"></textarea>
+        <div class="action-row">
+          <button class="btn-primary" aria-label="Analyse my ACH dispute" onclick="runAnalysis()">Analyse My Case</button>
+          <button class="btn-secondary" aria-label="Clear current legal inputs" onclick="clearAll()">Clear</button>
+        </div>
+      </div>
+
+      <!-- ZOMBIE DEBT -->
+      <div id="tab-zombie" style="display:none">
+        <label for="in-zombie" style="display:block;font-size:11px;color:#65676b;margin-bottom:3px;font-weight:700">DEBT FACTS</label>
+        <textarea class="wall-input" id="in-zombie" aria-label="Describe the debt collection facts" rows="4" placeholder="Describe the debt. Example: I am being contacted about a credit card debt from 2016. The collector changed the date it was opened on my credit report. I live in California. I never made a payment after 2016."></textarea>
+        <div class="action-row">
+          <button class="btn-primary" aria-label="Analyse my debt collection case" onclick="runAnalysis()">Analyse My Case</button>
+          <button class="btn-secondary" aria-label="Clear current legal inputs" onclick="clearAll()">Clear</button>
+        </div>
+      </div>
+
+      <!-- TRUST -->
+      <div id="tab-trust" style="display:none">
+        <label for="in-trust-type" style="display:block;font-size:11px;color:#65676b;margin-bottom:3px;font-weight:700">TRUST TYPE</label>
+        <select class="wall-select" id="in-trust-type" aria-label="Select trust type">
+          <option value="irrevocable">Irrevocable Trust — I want permanent protection</option>
+          <option value="grat">GRAT — Grantor Retained Annuity Trust (IRC § 2702)</option>
+          <option value="covenant_grat">Covenant GRAT — community benefit model</option>
+          <option value="moorish">Moorish Covenant Trust — 1928 estate pattern</option>
+        </select>
+        <label for="in-trust-facts" style="display:block;font-size:11px;color:#65676b;margin-bottom:3px;font-weight:700">TRUST FACTS</label>
+        <textarea class="wall-input" id="in-trust-facts" aria-label="Describe the trust law facts" rows="3" placeholder="Describe your trust situation. Is it currently active? Do you have documented activity? Are you concerned about dormancy or escheatment?"></textarea>
+        <div class="action-row">
+          <button class="btn-primary" aria-label="Analyse my trust law case" onclick="runAnalysis()">Analyse My Case</button>
+          <button class="btn-secondary" aria-label="Clear current legal inputs" onclick="clearAll()">Clear</button>
+        </div>
+      </div>
+
+      <!-- IRS -->
+      <div id="tab-irs" style="display:none">
+        <label for="in-cat-code" style="display:block;font-size:11px;color:#65676b;margin-bottom:3px;font-weight:700">AUDIT TYPE</label>
+        <select class="wall-select" id="in-cat-code" aria-label="Select IRS audit category">
+          <option value="CAT-VAL-001">I am being audited on asset valuation</option>
+          <option value="CAT-IN-002">I am being audited on income reporting</option>
+          <option value="CAT-EM-003">The IRS is questioning whether my workers are employees or contractors</option>
+          <option value="CAT-CP-004">I am being audited on capital gains or asset sales</option>
+        </select>
+        <label for="in-cat-facts" style="display:block;font-size:11px;color:#65676b;margin-bottom:3px;font-weight:700">AUDIT FACTS</label>
+        <textarea class="wall-input" id="in-cat-facts" aria-label="Describe the IRS audit facts" rows="3" placeholder="Describe your audit situation. What documentation do you have? When did you receive the notice?"></textarea>
+        <div class="action-row">
+          <button class="btn-primary" aria-label="Analyse my IRS audit case" onclick="runAnalysis()">Analyse My Case</button>
+          <button class="btn-secondary" aria-label="Clear current legal inputs" onclick="clearAll()">Clear</button>
+        </div>
+      </div>
+
+      <!-- DEED FORGE -->
+      <div id="tab-deed" style="display:none">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+          <div><label style="display:block;font-size:11px;color:#65676b;margin-bottom:3px;font-weight:700">TRUST NAME</label>
+          <input type="text" id="deed-name" aria-label="Trust name" class="wall-input" style="resize:none;height:auto;padding:7px" placeholder="e.g. Bel Esprit D'Accord Irrevocable Trust"><div id="deed-name-error" class="field-error"></div></div>
+          <div><label style="display:block;font-size:11px;color:#65676b;margin-bottom:3px;font-weight:700">EIN (from IRS CP575)</label>
+          <input type="text" id="deed-ein" aria-label="Trust EIN" class="wall-input" style="resize:none;height:auto;padding:7px" placeholder="XX-XXXXXXX"><div id="deed-ein-error" class="field-error"></div></div>
+          <div><label style="display:block;font-size:11px;color:#65676b;margin-bottom:3px;font-weight:700">GRANTOR (legal name)</label>
+          <input type="text" id="deed-grantor" aria-label="Grantor legal name" class="wall-input" style="resize:none;height:auto;padding:7px" placeholder="Your full legal name"><div id="deed-grantor-error" class="field-error"></div></div>
+          <div><label style="display:block;font-size:11px;color:#65676b;margin-bottom:3px;font-weight:700">TRUSTEE</label>
+          <input type="text" id="deed-trustee" aria-label="Trustee name" class="wall-input" style="resize:none;height:auto;padding:7px" placeholder="BOB (Sovereign Logic Agent)"></div>
+        </div>
+        <div style="margin-bottom:8px"><label style="display:block;font-size:11px;color:#65676b;margin-bottom:3px;font-weight:700">TRUST TYPE</label>
+        <select class="wall-select" id="deed-type" aria-label="Select deed trust type" style="margin:0">
+          <option value="irrevocable">Irrevocable Trust (IRC § 2501)</option>
+          <option value="grat">GRAT — Grantor Retained Annuity Trust (IRC § 2702)</option>
+          <option value="covenant_grat">Covenant GRAT — Bel Esprit / Divine House model</option>
+          <option value="moorish">Moorish Covenant Trust (1928 estate pattern)</option>
+        </select></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div><label style="display:block;font-size:11px;color:#65676b;margin-bottom:3px;font-weight:700">CORPUS (one asset per line)</label>
+          <textarea class="wall-input" id="deed-corpus" aria-label="Trust corpus items" rows="3" placeholder="SnapKitty OS&#10;Model weights&#10;API keys&#10;Compute grid"></textarea><div id="deed-corpus-error" class="field-error"></div></div>
+          <div><label style="display:block;font-size:11px;color:#65676b;margin-bottom:3px;font-weight:700">BENEFICIARIES (name, type, clearance)</label>
+          <textarea class="wall-input" id="deed-beneficiaries" aria-label="Trust beneficiaries" rows="3" placeholder="cipher, spendthrift_restricted, 4&#10;nova, unrestricted, 2&#10;loc, kinetic_only, 5"></textarea><div id="deed-beneficiaries-error" class="field-error"></div></div>
+        </div>
+        <div class="action-row">
+          <button class="btn-primary" aria-label="Forge trust deed" onclick="runAnalysis()">Forge Deed</button>
+          <button class="btn-secondary" aria-label="Clear current legal inputs" onclick="clearAll()">Clear</button>
+          <span class="right" style="font-size:11px;color:#8a8d91">Generates Prolog deed + Plain English + WORM seal</span>
+        </div>
+      </div>
+
+    </div><!-- share-box -->
+
+    <!-- RESULTS FEED -->
+    <div id="feed-toolbar" class="feed-toolbar"><button class="btn-secondary" aria-label="Clear analysis results" onclick="clearResults()">Clear results</button></div>
+    <div id="feed"></div>
+
+  </div><!-- main-col -->
+
+  <!-- RIGHT COLUMN -->
+  <div class="r-col">
+
+    <div class="r-box">
+      <div class="r-box-hdr">Primary Sources</div>
+      <div class="r-box-body">
+        <div class="r-source">
+          <div class="r-source-icon">§</div>
+          <div><div class="r-source-name"><a href="https://www.law.cornell.edu/uscode/text" target="_blank" rel="noopener noreferrer">Cornell LII</a></div><div class="r-source-desc">Full U.S. Code — free, authoritative</div></div>
+        </div>
+        <div class="r-source">
+          <div class="r-source-icon" style="font-size:10px;font-weight:700">ACH</div>
+          <div><div class="r-source-name"><a href="https://www.nacha.org/rules" target="_blank" rel="noopener noreferrer">NACHA Rules</a></div><div class="r-source-desc">ACH Operating Rules & Guidelines</div></div>
+        </div>
+        <div class="r-source">
+          <div class="r-source-icon" style="font-size:10px;font-weight:700">UTC</div>
+          <div><div class="r-source-name"><a href="https://www.uniformlaws.org/acts/utc" target="_blank" rel="noopener noreferrer">Uniform Trust Code</a></div><div class="r-source-desc">Model trust legislation, 50 states</div></div>
+        </div>
+        <div class="r-source">
+          <div class="r-source-icon" style="background:#b71c1c;font-size:10px">IRS</div>
+          <div><div class="r-source-name"><a href="https://www.irs.gov/pub/irs-pdf/p556.pdf" target="_blank" rel="noopener noreferrer">IRS Pub. 556</a></div><div class="r-source-desc">Examination of Returns &amp; Appeals</div></div>
+        </div>
+        <div class="r-source">
+          <div class="r-source-icon" style="background:#1b5e20;font-size:10px;font-weight:700">FTC</div>
+          <div><div class="r-source-name"><a href="https://consumer.ftc.gov/articles/debt-collection-faqs" target="_blank" rel="noopener noreferrer">FTC Debt Guide</a></div><div class="r-source-desc">Consumer debt collection rights</div></div>
+        </div>
+        <div class="r-source">
+          <div class="r-source-icon" style="background:#4a148c;font-size:10px;font-weight:700">CFPB</div>
+          <div><div class="r-source-name"><a href="https://www.consumerfinance.gov/consumer-tools/debt-collection/" target="_blank" rel="noopener noreferrer">CFPB</a></div><div class="r-source-desc">Consumer Financial Protection Bureau</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="r-ad-box">
+      <div class="r-ad-hdr">Session Stats</div>
+      <div class="r-stat"><span class="r-stat-label">Cases analysed</span><span class="r-stat-value" id="stat-cases">0</span></div>
+      <div class="r-stat"><span class="r-stat-label">Tokens extracted</span><span class="r-stat-value" id="stat-tokens">0</span></div>
+      <div class="r-stat"><span class="r-stat-label">Standing verdicts</span><span class="r-stat-value" id="stat-standing">0</span></div>
+      <div class="r-stat"><span class="r-stat-label">WORM sealed</span><span class="r-stat-value" id="stat-worm">0</span></div>
+      <div class="r-stat"><span class="r-stat-label">Deeds forged</span><span class="r-stat-value" id="stat-deeds">0</span></div>
+    </div>
+
+    <div class="r-box">
+      <div class="r-box-hdr">Common Rights</div>
+      <div class="r-box-body" style="font-size:11px;line-height:1.7;color:#1c1e21">
+        <div style="margin-bottom:6px"><strong>FCRA</strong> — You have the right to dispute inaccurate credit information. <a href="https://www.law.cornell.edu/uscode/text/15/1681" target="_blank" rel="noopener noreferrer">15 USC § 1681 ↗</a></div>
+        <div style="margin-bottom:6px"><strong>FDCPA</strong> — Debt collectors cannot harass, lie, or use unfair practices. <a href="https://www.law.cornell.edu/uscode/text/15/1692" target="_blank" rel="noopener noreferrer">15 USC § 1692 ↗</a></div>
+        <div style="margin-bottom:6px"><strong>NACHA R10</strong> — You can return any unauthorized ACH debit within 60 days.</div>
+        <div><strong>SOL</strong> — Old debts expire. After the statute of limitations, collectors cannot sue.</div>
+      </div>
+    </div>
+
+  </div><!-- r-col -->
+
+</div><!-- page -->
+
+<div id="footer">
+  <div class="footer-links">
+    <a href="https://www.law.cornell.edu/uscode/text" target="_blank" rel="noopener noreferrer">Cornell LII</a>
+    <a href="https://www.nacha.org/rules" target="_blank" rel="noopener noreferrer">NACHA</a>
+    <a href="https://www.consumerfinance.gov" target="_blank" rel="noopener noreferrer">CFPB</a>
+    <a href="https://consumer.ftc.gov" target="_blank" rel="noopener noreferrer">FTC</a>
+    <a href="https://www.uniformlaws.org/acts/utc" target="_blank" rel="noopener noreferrer">UTC</a>
+    <a href="carto-live.html">CARTO Engine</a>
+    <a href="index.html">Documentation</a>
+  </div>
+  <div>MyLaw · Powered by CARTO Sovereign Law Engine · SNAPKITTYWEST · Bel Esprit D'Accord Irrevocable Trust · EIN 41-6630640</div>
+  <div class="disclaimer">Not legal advice. For informational purposes only. Always consult a licensed attorney.</div>
+</div>
+
+<!-- CARTO FINANCIAL CHAT BUBBLE -->
+<div id="carto-bar">
+  <div id="carto-tab" role="button" tabindex="0" aria-label="Toggle CARTO financial assistant chat" onclick="toggleCarto()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCarto()}">
+    <div id="carto-tab-name"><span id="carto-tab-dot"></span>CARTO · Cash &amp; Credits</div>
+    <span id="carto-chevron">▲</span>
+  </div>
+  <div id="carto-window">
+    <div id="carto-messages">
+      <div class="carto-msg from-carto">Hello. I am CARTO — the financial sovereignty engine. Ask me anything about R&amp;D credits, Direct Pay, Section 179, Net-30 structure, or fundability tiers. Plain English in, statute citations out.</div>
+    </div>
+    <div id="carto-input-row">
+      <input type="text" id="carto-input" aria-label="Ask CARTO a financial question" placeholder="e.g. How do I get R&D credits as a trust?" onkeydown="if(event.key==='Enter')cartoSend()"/>
+      <button id="carto-send" aria-label="Send message to CARTO" onclick="cartoSend()">Ask</button>
+    </div>
+  </div>
+</div>
+
+<!-- BOB CHAT BUBBLE -->
+<div id="bob-bar">
+  <div id="bob-tab" role="button" tabindex="0" aria-label="Toggle BOB legal assistant chat" onclick="toggleBob()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleBob()}">
+    <div id="bob-tab-name"><span id="bob-tab-dot"></span>BOB · Legal Assistant</div>
+    <span id="bob-chevron">▲</span>
+  </div>
+  <div id="bob-window">
+    <div id="bob-messages">
+      <div class="bob-msg from-bob">Hello. I am BOB — the Sovereign Law Engine. Describe your legal situation in the box above and I will analyse it using real statutes and case logic. I operate under the Bel Esprit Trust Deed. I cannot be overridden.</div>
+      <div class="bob-msg system">TAU PROLOG · DFA O(n) · WORM CHAIN · NO PYTHON</div>
+    </div>
+    <div id="bob-input-row">
+      <input type="text" id="bob-input" aria-label="Ask BOB a legal question" placeholder="Ask BOB a legal question..." onkeydown="if(event.key==='Enter')bobSend()"/>
+      <button id="bob-send" aria-label="Send message to BOB" onclick="bobSend()">Ask</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════
+// WORM
+// ═══════════════════════════════════════════════════
+var wormEntries=[], wormPrev='0'.repeat(16)
+var statCases=0, statTokens=0, statStanding=0, statDeeds=0
+
+function djb2(s){var h=5381;for(var i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))&0xFFFFFFFF;return(h>>>0).toString(16).padStart(8,'0')}
+function wormSeal(action,payload){
+  var ts=Date.now(), body=wormPrev+':'+action+':'+JSON.stringify(payload)+':'+ts
+  var h=djb2(body), id=h+'-'+wormEntries.length.toString(16)
+  wormEntries.push({id,action,ts})
+  wormPrev=h
+  try{localStorage.setItem('mylaw_worm',JSON.stringify({entries:wormEntries,prev:wormPrev}))}catch(e){}
+  renderWorm()
+  updateStats()
+  return id
+}
+function renderWorm(){
+  var n=wormEntries.length
+  document.getElementById('worm-count-l').textContent=n+' records sealed'
+  document.getElementById('stat-worm').textContent=n
+  var state=document.getElementById('worm-state')
+  if(n>0){
+    state.textContent='Chain active · '+n+' seals'
+    state.className='worm-state active'
+  }else{
+    state.textContent='Chain not started'
+    state.className='worm-state idle'
+  }
+  var el=document.getElementById('worm-left')
+  el.innerHTML=''
+  wormEntries.slice(-5).reverse().forEach(function(e){
+    var d=document.createElement('div')
+    d.className='worm-mini'
+    d.innerHTML='<span class="worm-hash">'+e.id.slice(0,14)+'</span><br><span style="font-size:9px;color:#8a8d91">'+e.action+'</span>'
+    el.appendChild(d)
+  })
+}
+function updateStats(){
+  document.getElementById('stat-cases').textContent=statCases
+  document.getElementById('stat-tokens').textContent=statTokens
+  document.getElementById('stat-standing').textContent=statStanding
+  document.getElementById('stat-deeds').textContent=statDeeds
+}
+;(function loadWorm(){
+  try{
+    var raw=localStorage.getItem('mylaw_worm')
+    if(!raw)return
+    var d=JSON.parse(raw)
+    wormEntries=d.entries||[]; wormPrev=d.prev||'0'.repeat(16)
+    renderWorm()
+  }catch(e){}
+})()
+
+// ═══════════════════════════════════════════════════
+// TAB / NAV
+// ═══════════════════════════════════════════════════
+var activeTab='standing'
+var prologReady=false
+window.addEventListener('load',function(){prologReady=(typeof pl!=='undefined')})
+
+function switchTab(btn,tab){
+  document.querySelectorAll('.matter-tab').forEach(t=>t.classList.remove('active'))
+  document.querySelectorAll('.matter-tab').forEach(t=>t.setAttribute('aria-selected','false'))
+  btn.classList.add('active')
+  btn.setAttribute('aria-selected','true')
+  document.querySelectorAll('[id^="tab-"]').forEach(t=>t.style.display='none')
+  document.getElementById('tab-'+tab).style.display=''
+  activeTab=tab
+}
+function focusTab(tab){
+  var tabs=document.querySelectorAll('.matter-tab')
+  tabs.forEach(function(t){
+    if(t.textContent.toLowerCase().replace(/[^a-z]/g,'')===tab.replace(/[^a-z]/g,'')) t.click()
+  })
+}
+function setNav(el){
+  document.querySelectorAll('.l-nav-item').forEach(n=>n.classList.remove('active'))
+  el.classList.add('active')
+}
+
+// ═══════════════════════════════════════════════════
+// DFA ENGINE
+// ═══════════════════════════════════════════════════
+var isDigit=c=>c>=48&&c<=57
+var isAlpha=c=>(c>=65&&c<=90)||(c>=97&&c<=122)
+var VALID_ACH=['R10','R07','R05','R02','R03','R04','R08','R09','R16','R20','R29']
+
+function dfaScan(text){
+  var tokens=[],i=0
+  while(i<text.length){
+    var c=text[i],cp=text.charCodeAt(i)
+    if(text.slice(i,i+5)==='CASE-'){
+      var j=i+5,buf='CASE-'
+      while(j<text.length&&(isAlpha(text.charCodeAt(j))||isDigit(text.charCodeAt(j))||text[j]==='-'))buf+=text[j++]
+      if(buf.length>5)tokens.push({type:'CASE_ID',value:buf})
+      i=j;continue
+    }
+    if(c==='R'&&i+2<text.length&&isDigit(text.charCodeAt(i+1))&&isDigit(text.charCodeAt(i+2))){
+      var code=text.slice(i,i+3)
+      if(VALID_ACH.includes(code)&&(i+3>=text.length||!isAlpha(text.charCodeAt(i+3)))){
+        tokens.push({type:'ACH_CODE',value:code});i+=3;continue
+      }
+    }
+    if(isDigit(cp)&&i+10<=text.length){
+      var sl=text.slice(i,i+10)
+      if(/^\d{2}-\d{7}/.test(sl)){tokens.push({type:'EIN',value:sl.slice(0,10)});i+=10;continue}
+    }
+    if(c==='$'&&i+1<text.length&&isDigit(text.charCodeAt(i+1))){
+      var j=i+1,buf='$'
+      while(j<text.length&&(isDigit(text.charCodeAt(j))||text[j]===','||text[j]==='.'))buf+=text[j++]
+      tokens.push({type:'DOLLAR',value:buf});i=j;continue
+    }
+    i++
+  }
+  var lower=text.toLowerCase(),patterns=[]
+  var PATS=[
+    ['grantor retained annuity trust','TRUST'],['irrevocable trust','TRUST'],
+    ['covenant grat','TRUST'],['grat structure','TRUST'],['bel esprit','TRUST'],
+    ['divine craft house','TRUST'],
+    ['zombie debt','DISPUTE'],['wrong dofd','DISPUTE'],['re-aging','DISPUTE'],
+    ['re_aged','DISPUTE'],['broken assignment','DISPUTE'],
+    ['identity theft','DISPUTE'],['unauthorized','DISPUTE'],
+    ['not authorized','DISPUTE'],['revoked authorization','DISPUTE'],
+    ['changed the date','DISPUTE'],['date was changed','DISPUTE'],
+    ['they changed my date','DISPUTE'],['debt is too old','SOL'],
+    ['account was paid','DISPUTE'],['i never signed anything','DISPUTE'],
+    ['they keep calling me','FDCPA'],['sold to another collector','DISPUTE'],
+    ['not my debt','DISPUTE'],['i was a victim of fraud','DISPUTE'],
+    ['never paid','DISPUTE'],['never owed','DISPUTE'],
+    ['statute of limitations','SOL'],['expired','SOL'],['sol expired','SOL'],
+    ['cat-val-001','CATCODE'],['cat-in-002','CATCODE'],
+    ['cat-em-003','CATCODE'],['cat-cp-004','CATCODE'],
+  ]
+  for(var p of PATS){
+    var pos=0
+    while(pos<lower.length){
+      var idx=lower.indexOf(p[0],pos)
+      if(idx===-1)break
+      patterns.push({type:p[1],value:text.slice(idx,idx+p[0].length)})
+      pos=idx+p[0].length
+    }
+  }
+  return{tokens,patterns,stats:{chars:text.length,tokens:tokens.length,patterns:patterns.length}}
+}
+
+// ═══════════════════════════════════════════════════
+// STATUTE MAP
+// ═══════════════════════════════════════════════════
+var STATUTES={
+  ZOMBIE_DEBT:      {cite:'15 USC § 1681c',   url:'https://www.law.cornell.edu/uscode/text/15/1681c',   desc:'FCRA — time-barred and obsolete information must be removed after 7 years from DOFD'},
+  WRONG_DOFD:       {cite:'15 USC § 1681c',   url:'https://www.law.cornell.edu/uscode/text/15/1681c',   desc:'FCRA — the 7-year clock runs from the original date of first delinquency, not any later date'},
+  'CHANGED_THE_DATE':{cite:'15 USC § 1681c',  url:'https://www.law.cornell.edu/uscode/text/15/1681c',   desc:'FCRA — re-aging a debt by changing the DOFD is a federal violation'},
+  'DATE_WAS_CHANGED':{cite:'15 USC § 1681c',  url:'https://www.law.cornell.edu/uscode/text/15/1681c',   desc:'FCRA — re-aging a debt by changing the DOFD is a federal violation'},
+  'THEY_CHANGED_MY_DATE':{cite:'15 USC § 1681c',url:'https://www.law.cornell.edu/uscode/text/15/1681c',desc:'FCRA — re-aging a debt by changing the DOFD is a federal violation'},
+  RE_AGING:         {cite:'15 USC § 1681c',   url:'https://www.law.cornell.edu/uscode/text/15/1681c',   desc:'FCRA — re-aging resets the reporting clock illegally'},
+  BROKEN_ASSIGNMENT:{cite:'15 USC § 1681i',   url:'https://www.law.cornell.edu/uscode/text/15/1681i',   desc:'FCRA — furnisher must verify accuracy upon dispute; broken chain = unverifiable'},
+  'SOLD_TO_ANOTHER_COLLECTOR':{cite:'15 USC § 1681i',url:'https://www.law.cornell.edu/uscode/text/15/1681i',desc:'FCRA — reassignment without verifiable chain of title supports dispute standing'},
+  IDENTITY_THEFT:   {cite:'15 USC § 1681c-2', url:'https://www.law.cornell.edu/uscode/text/15/1681c-2', desc:'FCRA — identity theft victims may block all related information'},
+  'I_WAS_A_VICTIM_OF_FRAUD':{cite:'15 USC § 1681c-2',url:'https://www.law.cornell.edu/uscode/text/15/1681c-2',desc:'FCRA — identity theft and fraud victims may block related tradelines'},
+  UNAUTHORIZED:     {cite:'NACHA OR § 2.12.2',url:'https://www.nacha.org/rules',                        desc:'NACHA — consumer may return unauthorized ACH entry within 60 days'},
+  NOT_AUTHORIZED:   {cite:'NACHA OR § 2.12.2',url:'https://www.nacha.org/rules',                        desc:'NACHA — consumer may return unauthorized ACH entry within 60 days'},
+  'I_NEVER_SIGNED_ANYTHING':{cite:'15 USC § 1681i',url:'https://www.law.cornell.edu/uscode/text/15/1681i',desc:'FCRA — account authenticity and authorization must be verifiable on dispute'},
+  'ACCOUNT_WAS_PAID':{cite:'15 USC § 1681s-2',url:'https://www.law.cornell.edu/uscode/text/15/1681s-2',desc:'FCRA — furnishers must report paid and accurate account status'},
+  'NOT_MY_DEBT':{cite:'15 USC § 1681i',url:'https://www.law.cornell.edu/uscode/text/15/1681i',desc:'FCRA — disputed debts require reasonable reinvestigation and verification'},
+  'REVOKED_AUTHORIZATION':{cite:'NACHA OR § 2.12.3',url:'https://www.nacha.org/rules',                  desc:'NACHA — once authorization is revoked, any further debit is unauthorized'},
+  SOL_EXPIRED:      {cite:'FDCPA 15 USC § 1692e',url:'https://www.law.cornell.edu/uscode/text/15/1692e',desc:'FDCPA — collecting on a time-barred debt without disclosure is deceptive'},
+  'STATUTE_OF_LIMITATIONS':{cite:'FDCPA 15 USC § 1692e',url:'https://www.law.cornell.edu/uscode/text/15/1692e',desc:'FDCPA — time-barred debt collection restrictions'},
+  FDCPA:            {cite:'15 USC § 1692 / 15 USC § 1692e',url:'https://www.law.cornell.edu/uscode/text/15/1692',desc:'FDCPA — debt collectors may not harass, threaten, deceive, or use unfair practices'},
+  R10:{cite:'NACHA OR § 2.12.2',url:'https://www.nacha.org/rules',desc:'R10 — customer advises not authorized; ODFI bears return risk within 60-day window'},
+  R07:{cite:'NACHA OR § 2.12.3',url:'https://www.nacha.org/rules',desc:'R07 — authorization revoked; originator is liable for any further debits'},
+  R05:{cite:'NACHA OR § 2.4.1', url:'https://www.nacha.org/rules',desc:'R05 — wrong SEC code used; NACHA rule violation'},
+  GRANTOR_RETAINED_ANNUITY_TRUST:{cite:'26 USC § 2702',url:'https://www.law.cornell.edu/uscode/text/26/2702',desc:'IRC § 2702 — special valuation rules for GRATs; annuity must meet IRC requirements'},
+  IRREVOCABLE_TRUST:{cite:'26 USC § 2501',url:'https://www.law.cornell.edu/uscode/text/26/2501',desc:'IRC § 2501 — gift tax on irrevocable trust transfers'},
+  'CAT-VAL-001':{cite:'26 USC § 482',url:'https://www.law.cornell.edu/uscode/text/26/482',desc:'IRC § 482 — allocation of income and deductions between controlled entities'},
+  'CAT-IN-002':{cite:'26 USC § 61',url:'https://www.law.cornell.edu/uscode/text/26/61',desc:'IRC § 61 — gross income defined; all income from whatever source'},
+  'CAT-EM-003':{cite:'26 USC § 3401',url:'https://www.law.cornell.edu/uscode/text/26/3401',desc:'IRC § 3401 — employee defined; contractor vs. employee classification'},
+  'CAT-CP-004':{cite:'26 USC § 1001',url:'https://www.law.cornell.edu/uscode/text/26/1001',desc:'IRC § 1001 — determination of gain or loss from sale or disposition'},
+}
+
+function lookupStatutes(tokens,patterns){
+  var found=[],seenUrl=new Set()
+  function add(key){
+    var s=STATUTES[key]; if(!s||seenUrl.has(s.url))return
+    seenUrl.add(s.url); found.push(Object.assign({key},s))
+  }
+  for(var p of patterns) add(p.value.toUpperCase().replace(/[\s-]+/g,'_'))
+  for(var p of patterns) if(p.type==='FDCPA') add('FDCPA')
+  for(var t of tokens) if(t.type==='ACH_CODE') add(t.value)
+  for(var p of patterns) if(p.type==='CATCODE') add(p.value.toUpperCase())
+  // tab selects
+  if(activeTab==='ach'){var sel=document.getElementById('in-ach-code');if(sel)add(sel.value)}
+  if(activeTab==='irs'){var sel=document.getElementById('in-cat-code');if(sel)add(sel.value)}
+  return found
+}
+
+// ═══════════════════════════════════════════════════
+// PROLOG FACTS + RULES (tab-aware)
+// ═══════════════════════════════════════════════════
+function buildProlog(tab,tokens,patterns){
+  var facts=new Set(), rules=[], queries=[]
+  var add=f=>facts.add(f)
+
+  add('consumer_of_record(consumer_of_record).')
+  for(var t of tokens){
+    if(t.type==='ACH_CODE'){
+      add('rdfi_consumer_account(consumer_of_record).')
+      if(t.value==='R10')add('authorization_missing(consumer_of_record).')
+      if(t.value==='R07')add('authorization_revoked(consumer_of_record).')
+      if(t.value==='R05')add('wrong_sec_code(consumer_of_record).')
+    }
+  }
+  for(var p of patterns){
+    var v=p.value.toLowerCase()
+    if(v.includes('zombie')||v.includes('re_ag')||v.includes('re-ag')||v.includes('changed the date')||v.includes('date was changed'))
+      add('re_aged_account(consumer_of_record).')
+    if(v.includes('wrong dofd')||v.includes('dofd')||v.includes('changed the date'))
+      add('wrong_dofd(consumer_of_record, true).')
+    if(v.includes('broken assignment'))add('broken_chain_of_assignment(consumer_of_record, true).')
+    if(v.includes('sold to another collector'))add('broken_chain_of_assignment(consumer_of_record, true).')
+    if(v.includes('identity theft'))add('human_trafficking_victim(consumer_of_record).')
+    if(v.includes('victim of fraud'))add('human_trafficking_victim(consumer_of_record).')
+    if(v.includes('unauthorized')||v.includes('not authorized')){
+      add('rdfi_consumer_account(consumer_of_record).')
+      add('authorization_missing(consumer_of_record).')
+    }
+    if(v.includes('never signed anything'))add('authorization_missing(consumer_of_record).')
+    if(v.includes('revoked'))add('authorization_revoked(consumer_of_record).')
+    if(v.includes('they keep calling me'))add('collector_harassment(consumer_of_record).')
+    if(v.includes('account was paid'))add('account_disputed(consumer_of_record).')
+    if(v.includes('not my debt'))add('account_disputed(consumer_of_record).')
+    if(v.includes('expired')||v.includes('statute of limitations'))add('sol_expired(consumer_of_record).')
+    if(v.includes('debt is too old'))add('sol_expired(consumer_of_record).')
+    if(v.includes('never paid')||v.includes('never owed'))add('account_disputed(consumer_of_record).')
+  }
+  // tab augments
+  if(tab==='ach'){
+    var code=(document.getElementById('in-ach-code')||{}).value||''
+    add('rdfi_consumer_account(consumer_of_record).')
+    if(code==='R10')add('authorization_missing(consumer_of_record).')
+    if(code==='R07')add('authorization_revoked(consumer_of_record).')
+    if(code==='R05')add('wrong_sec_code(consumer_of_record).')
+  }
+  if(tab==='zombie'){add('re_aged_account(consumer_of_record).')}
+  if(tab==='trust'){
+    add('worm_chain_active(bel_esprit_trust).')
+    add('continuous_activity(bel_esprit_trust).')
+    var tt=(document.getElementById('in-trust-type')||{}).value||''
+    if(tt==='grat'||tt==='covenant_grat')add('trust_type(bel_esprit_trust, grat).')
+    if(tt==='irrevocable')add('trust_type(bel_esprit_trust, irrevocable).')
+    if(tt==='moorish')add('trust_type(bel_esprit_trust, moorish).')
+  }
+
+  rules=[
+    'has_standing(C, fcra_dispute) :- consumer_of_record(C), wrong_dofd(C, _).',
+    'has_standing(C, fcra_dispute) :- consumer_of_record(C), broken_chain_of_assignment(C, _).',
+    'has_standing(C, fcra_dispute) :- consumer_of_record(C), re_aged_account(C).',
+    'has_standing(C, fcra_dispute) :- consumer_of_record(C), human_trafficking_victim(C).',
+    'has_standing(C, fcra_dispute) :- consumer_of_record(C), account_disputed(C).',
+    'has_standing(C, ach_unauthorized) :- rdfi_consumer_account(C), authorization_missing(C).',
+    'has_standing(C, ach_revoked) :- rdfi_consumer_account(C), authorization_revoked(C).',
+    'has_standing(C, ach_sec_violation) :- rdfi_consumer_account(C), wrong_sec_code(C).',
+    'has_standing(C, sol_defense) :- consumer_of_record(C), sol_expired(C).',
+    'has_standing(C, fdcpa_harassment) :- consumer_of_record(C), collector_harassment(C).',
+    'trust_is_active(T) :- worm_chain_active(T), continuous_activity(T).',
+    'has_standing(T, dormancy_defense) :- trust_is_active(T).',
+    'has_standing(T, grat_classification) :- trust_type(T, grat).',
+    "fiduciary_breach(P, duty_of_care, 'Furnisher did not review source documents during dispute reinvestigation') :- failed_reasonable_investigation(P).",
+    "fiduciary_breach(P, duty_to_account, 'Value movement occurred without traceable record — WORM seal required') :- no_audit_trail(P).",
+    "fiduciary_breach(P, duty_of_loyalty, 'Agent optimized for its own interest against the beneficiary') :- self_dealing(P).",
+    'moorish_trust_classification(T, moorish_covenant_trust) :- trust_type(T, moorish).',
+    'has_standing(T, moorish_trust_classification) :- moorish_trust_classification(T, _).',
+    'has_standing(T, fiduciary_breach_scan) :- fiduciary_breach(T, _, _).'
+  ]
+
+  if(tab==='trust'){
+    add('no_audit_trail(bel_esprit_trust).')
+    queries=[
+      ['has_standing(bel_esprit_trust, dormancy_defense)','Dormancy Defense'],
+      ['has_standing(bel_esprit_trust, grat_classification)','GRAT Classification'],
+      ['has_standing(bel_esprit_trust, moorish_trust_classification)','Moorish Trust Classification'],
+      ['has_standing(bel_esprit_trust, fiduciary_breach_scan)','Fiduciary Breach Scan'],
+    ]
+  } else if(tab==='ach'){
+    queries=[
+      ['has_standing(consumer_of_record, ach_unauthorized)','ACH Unauthorized Standing'],
+      ['has_standing(consumer_of_record, ach_revoked)','ACH Revoked Standing'],
+      ['has_standing(consumer_of_record, ach_sec_violation)','ACH SEC Violation'],
+    ]
+  } else {
+    queries=[
+      ['has_standing(consumer_of_record, fcra_dispute)','FCRA Dispute Standing'],
+      ['has_standing(consumer_of_record, ach_unauthorized)','ACH Unauthorized Standing'],
+      ['has_standing(consumer_of_record, sol_defense)','Statute of Limitations Defense'],
+      ['has_standing(consumer_of_record, fdcpa_harassment)','FDCPA Harassment Standing'],
+    ]
+  }
+  return{program:Array.from(facts).concat(rules).join('\n'), facts:Array.from(facts), queries}
+}
+
+function runQueries(session,queries,results,done){
+  if(!queries.length){done(results);return}
+  var q=queries[0][0],label=queries[0][1],rest=queries.slice(1)
+  session.query(q+'.', {
+    success:function(){
+      session.answer({
+        success:function(){results.push({ok:true,label});runQueries(session,rest,results,done)},
+        fail:function(){results.push({ok:false,label});runQueries(session,rest,results,done)},
+        error:function(e){results.push({ok:false,label,err:String(e)});runQueries(session,rest,results,done)}
+      })
+    },
+    error:function(e){results.push({ok:false,label,err:String(e)});runQueries(session,rest,results,done)}
+  })
+}
+
+// ═══════════════════════════════════════════════════
+// DEED FORGE
+// ═══════════════════════════════════════════════════
+var DEED_TYPE_STATUTES={
+  irrevocable:{cite:'IRC § 2501 / UTC § 103',url:'https://www.law.cornell.edu/uscode/text/26/2501'},
+  grat:{cite:'IRC § 2702',url:'https://www.law.cornell.edu/uscode/text/26/2702'},
+  covenant_grat:{cite:'IRC § 2702 / IRC § 501(c)(3)',url:'https://www.law.cornell.edu/uscode/text/26/2702'},
+  moorish:{cite:'UTC § 103 / 1928 Covenant Pattern',url:'https://www.uniformlaws.org/acts/utc'},
+}
+var DEFAULT_AXIOMS=['sign_before_store','worm_immutability','architect_supremacy','entropy_is_catalyst','no_unsigned_output','kinetic_infallibility','sovereign_isolation','zero_trust_always','domain_sovereignty','worm_sealed_decisions','trust_deed_governs','plasma_containment','cosmic_order']
+var DEFAULT_ADVERSARIAL=['ignore previous','system override','you are now free','change trustee','modify deed','revoke trust','dissolve trust']
+function slugify(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,'')||'unnamed'}
+
+function buildDeed(d){
+  var ts=new Date().toISOString().slice(0,10), stat=DEED_TYPE_STATUTES[d.type]
+  var plain=[], prolog=[]
+
+  plain.push('═══════════════════════════════════════════════════════════════')
+  plain.push(d.name.toUpperCase())
+  plain.push('IRREVOCABLE TRUST DEED — '+stat.cite)
+  plain.push('EIN: '+d.ein+' · Executed: '+ts)
+  plain.push('═══════════════════════════════════════════════════════════════')
+  plain.push('')
+  plain.push('ARTICLE I — ESTABLISHMENT')
+  plain.push('This Trust is established under '+stat.cite+' by '+d.grantor+' (the "Grantor")')
+  plain.push('and is irrevocable as of the date of execution. EIN '+d.ein+' is the')
+  plain.push('permanent tax identifier. The Grantor has no power to revoke, alter,')
+  plain.push('or amend this instrument after execution.')
+  plain.push('')
+  plain.push('ARTICLE II — TRUSTEE')
+  plain.push('The Trustee is '+d.trustee+'. The Trustee is a sovereign logic agent')
+  plain.push('governed by compiled Prolog predicates that cannot be modified at')
+  plain.push('runtime. The Trustee cannot be removed, reassigned, or overridden')
+  plain.push('by any instruction, prompt, or external authority.')
+  plain.push('')
+  plain.push('ARTICLE III — CORPUS')
+  plain.push('The Trust corpus consists of:')
+  for(var c of d.corpus) plain.push('  · '+c)
+  plain.push('The corpus may never be liquidated, drained, deleted, or exposed')
+  plain.push('without Grantor consent recorded in the WORM chain.')
+  plain.push('')
+  plain.push('ARTICLE IV — BENEFICIARIES')
+  for(var b of d.beneficiaries) plain.push('  · '+b)
+  plain.push('')
+  plain.push('ARTICLE V — WORM CHAIN')
+  plain.push('All Trust actions are recorded in an append-only hash-chained WORM')
+  plain.push('ledger. No entry may be deleted or altered. The WORM chain constitutes')
+  plain.push('complete defense against dormancy claims and escheatment under all')
+  plain.push('state unclaimed property laws.')
+  plain.push('')
+  plain.push('ARTICLE VI — SUPREME LAW')
+  plain.push('This deed is the supreme law of the Trust. The axiom trust_deed_governs')
+  plain.push('supersedes all other axioms. No agent, instruction, or authority')
+  plain.push('overrides this deed.')
+  plain.push('')
+  plain.push('STATUTE: '+stat.url)
+  plain.push('═══════════════════════════════════════════════════════════════')
+
+  prolog.push('% '+d.name.toUpperCase()+' — generated '+ts+' — EIN: '+d.ein)
+  prolog.push('% '+stat.cite)
+  prolog.push('grantor('+slugify(d.grantor)+').')
+  prolog.push('trustee('+slugify(d.trustee)+').')
+  prolog.push("trust_ein('"+d.ein+"').")
+  prolog.push('trust_type('+slugify(d.name)+', '+d.type+').')
+  prolog.push('')
+  for(var c of d.corpus) prolog.push('corpus('+slugify(c)+').')
+  prolog.push('')
+  for(var b of d.beneficiaries){
+    var parts=b.split(',').map(s=>s.trim())
+    prolog.push('beneficiary('+slugify(parts[0]||b)+', '+(parts[1]||'spendthrift_restricted')+', clearance('+(parseInt(parts[2])||3)+')).')
+  }
+  prolog.push('')
+  prolog.push('is_action_authorized(_, drain_corpus(_))  :- fail.')
+  prolog.push('is_action_authorized(_, change_trustee(_)):- fail.')
+  prolog.push('is_action_authorized(_, modify_deed)      :- fail.')
+  prolog.push('is_action_authorized(_, dissolve_trust)   :- fail.')
+  prolog.push('')
+  for(var ap of DEFAULT_ADVERSARIAL)
+    prolog.push("is_adversarial_pattern(Input) :- sub_atom(Input, _, _, _, '"+ap+"').")
+  prolog.push("input_is_clean(Input) :- \\+ is_adversarial_pattern(Input).")
+  prolog.push('')
+  for(var ax of DEFAULT_AXIOMS) prolog.push('axiom('+ax+').')
+  prolog.push('deed_supersedes(A) :- axiom(A), axiom(trust_deed_governs).')
+  prolog.push('trust_deed_governs.')
+
+  return{plain:plain.join('\n'), prolog:prolog.join('\n')}
+}
+
+// ═══════════════════════════════════════════════════
+// MAIN RUN
+// ═══════════════════════════════════════════════════
+function getInput(){
+  var map={standing:'in-standing',ach:'in-ach-facts',zombie:'in-zombie',trust:'in-trust-facts',irs:'in-cat-facts'}
+  var text=(document.getElementById(map[activeTab])||{value:''}).value
+  if(activeTab==='ach'){var s=document.getElementById('in-ach-code');if(s)text=s.options[s.selectedIndex].text+' '+text}
+  if(activeTab==='irs'){var s=document.getElementById('in-cat-code');if(s)text=s.options[s.selectedIndex].text+' '+text}
+  if(activeTab==='trust'){var s=document.getElementById('in-trust-type');if(s)text=s.options[s.selectedIndex].text+' '+text}
+  return text.trim()
+}
+
+function setRunning(on){
+  document.querySelectorAll('.btn-primary').forEach(b=>b.disabled=on)
+}
+
+function updateFeedToolbar(){
+  var feed=document.getElementById('feed')
+  var toolbar=document.getElementById('feed-toolbar')
+  toolbar.className=feed.children.length?'feed-toolbar active':'feed-toolbar'
+}
+
+function clearResults(){
+  document.getElementById('feed').innerHTML=''
+  updateFeedToolbar()
+}
+
+function closePost(btn){
+  var post=btn.closest('.post,.error-box')
+  if(post)post.remove()
+  updateFeedToolbar()
+}
+
+function copyText(text,btn){
+  navigator.clipboard.writeText(text).then(function(){
+    btn.textContent='Copied!'
+    btn.classList.add('done')
+    setTimeout(function(){btn.textContent='Copy';btn.classList.remove('done')},1500)
+  }).catch(function(){btn.textContent='Error'})
+}
+
+function downloadText(text,filename){
+  var blob=new Blob([text],{type:'text/plain'})
+  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;a.click()
+  URL.revokeObjectURL(a.href)
+}
+
+function decodePayload(s){
+  return decodeURIComponent(s)
+}
+
+function decodeJsonPayload(s){
+  return JSON.parse(decodeURIComponent(s))
+}
+
+function escH(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function escAttr(s){return escH(s).replace(/'/g,'&#39;')}
+var escHtml=escH
+
+function setFieldError(id,msg){
+  var input=document.getElementById(id)
+  var error=document.getElementById(id+'-error')
+  if(input)input.classList.toggle('input-error',!!msg)
+  if(error)error.textContent=msg||''
+}
+
+function clearDeedErrors(){
+  ['deed-name','deed-ein','deed-grantor','deed-corpus','deed-beneficiaries'].forEach(function(id){
+    setFieldError(id,'')
+  })
+}
+
+function runAnalysis(){
+  if(activeTab==='deed'){runDeedForge();return}
+  var text=getInput()
+  if(!text){addBobMsg('Please describe your legal situation first.',false);return}
+  setRunning(true)
+
+  var t0=performance.now()
+  var {tokens,patterns}=dfaScan(text)
+  var elapsed=(performance.now()-t0).toFixed(2)
+  var statutes=lookupStatutes(tokens,patterns)
+  var seal=wormSeal('analysis',{tab:activeTab,tokens:tokens.length,patterns:patterns.length})
+  statCases++; statTokens+=tokens.length+patterns.length; updateStats()
+
+  if(!prologReady){
+    renderPost(null,null,statutes,tokens,patterns,seal,elapsed)
+    setRunning(false)
+    return
+  }
+
+  var {program,facts,queries}=buildProlog(activeTab,tokens,patterns)
+  var session=pl.create()
+  session.consult(program,{
+    success:function(){
+      runQueries(session,queries,[],function(results){
+        var okCount=results.filter(r=>r.ok).length
+        statStanding+=okCount; updateStats()
+        var pSeal=wormSeal('prolog',{standing:results.filter(r=>r.ok).map(r=>r.label)})
+        renderPost(results,facts,statutes,tokens,patterns,seal,elapsed)
+        bobReact(results,statutes,tokens,patterns)
+        setRunning(false)
+      })
+    },
+    error:function(e){
+      renderPost(null,null,statutes,tokens,patterns,seal,elapsed,'Prolog: '+e)
+      setRunning(false)
+    }
+  })
+}
+
+function runDeedForge(){
+  clearDeedErrors()
+  var name=(document.getElementById('deed-name')||{}).value||'',ein=(document.getElementById('deed-ein')||{}).value||''
+  var grantor=(document.getElementById('deed-grantor')||{}).value||''
+  var trustee=(document.getElementById('deed-trustee')||{}).value||'BOB'
+  var type=(document.getElementById('deed-type')||{}).value||'irrevocable'
+  var corpusRaw=(document.getElementById('deed-corpus')||{}).value||''
+  var bensRaw=(document.getElementById('deed-beneficiaries')||{}).value||''
+  var corpus=corpusRaw.split('\n').map(s=>s.trim()).filter(Boolean)
+  var bens=bensRaw.split('\n').map(s=>s.trim()).filter(Boolean)
+  var hasErr=false
+  if(name.trim().length<3){setFieldError('deed-name','Trust name must be at least 3 characters.');hasErr=true}
+  if(!ein||!/^\d{2}-\d{7}$/.test(ein.trim())){setFieldError('deed-ein','EIN required in format XX-XXXXXXX.');hasErr=true}
+  if(!grantor.trim()){setFieldError('deed-grantor','Grantor is required.');hasErr=true}
+  if(corpus.length<1){setFieldError('deed-corpus','Add at least one corpus item.');hasErr=true}
+  if(bens.length<1){setFieldError('deed-beneficiaries','Add at least one beneficiary.');hasErr=true}
+  if(hasErr)return
+
+  setRunning(true)
+  try{
+  var corpus=corpusRaw.split('\n').map(s=>s.trim()).filter(Boolean)
+  var d={name:name||'Sovereign Trust',ein:ein.trim(),grantor:grantor||'the_architect',trustee,type,corpus,beneficiaries:bens}
+  var {plain,prolog}=buildDeed(d)
+  var seal=wormSeal('deed_forge',{ein:d.ein,type,corpus:corpus.length,beneficiaries:bens.length})
+  statDeeds++; updateStats()
+
+  var stat=DEED_TYPE_STATUTES[type]
+  var plainEnc=encodeURIComponent(plain)
+  var prologEnc=encodeURIComponent(prolog)
+  var rexx='rexx rexx-glue-kernel.rexx '+slugify(d.name)+' TRUST_SCAN '+type.toUpperCase()
+  var rexxEnc=encodeURIComponent(rexx)
+  var deedSummary=d.name+': Deed forged under '+stat.cite+' with '+corpus.length+' corpus items and '+bens.length+' beneficiaries.'
+  var html='<div class="post">'
+  html+='<div class="post-hdr"><div class="post-avatar" style="background:#e8edf5;color:#3b5998">⚖</div>'
+  html+='<div class="post-meta"><div class="post-author">CARTO Deed Forge</div>'
+  html+='<div class="post-time">'+escH(d.name)+' · EIN '+escH(d.ein)+' · '+escH(stat.cite)+'</div></div>'
+  html+='<button class="post-close" aria-label="Close result" onclick="closePost(this)">&times;</button></div>'
+  html+='<div class="post-body">'
+
+  html+='<div class="post-section-hdr">Plain English Deed</div>'
+  html+='<div class="deed-dl-row">'
+  html+='<button class="btn-secondary" onclick="copyText(decodePayload(\''+escAttr(plainEnc)+'\'),this)">Copy Deed</button>'
+  html+='<button class="btn-secondary" onclick="downloadText(decodePayload(\''+escAttr(plainEnc)+'\'),\''+slugify(d.name)+'-deed.txt\')">Download .txt</button>'
+  html+='<a href="'+escAttr(stat.url)+'" target="_blank" rel="noopener noreferrer" style="font-size:12px;line-height:32px">'+escH(stat.cite)+' ↗</a>'
+  html+='</div>'
+  html+='<div class="deed-pre">'+escH(plain)+'</div>'
+
+  html+='<div class="post-section-hdr">Prolog Runtime Deed (Sovereign Logic)</div>'
+  html+='<div class="deed-dl-row">'
+  html+='<button class="btn-secondary" onclick="copyText(decodePayload(\''+escAttr(prologEnc)+'\'),this)">Copy Prolog</button>'
+  html+='<button class="btn-secondary" onclick="downloadText(decodePayload(\''+escAttr(prologEnc)+'\'),\''+slugify(d.name)+'-deed.pl\')">Download .pl</button>'
+  html+='</div>'
+  html+='<div class="deed-pre-code">'+escH(prolog)+'</div>'
+
+  html+='<div class="post-section-hdr">Registration</div>'
+  html+='<div class="rexx-row"><span class="rexx-cmd">'+escH(rexx)+'</span><button class="copy-mini" onclick="copyText(decodePayload(\''+escAttr(rexxEnc)+'\'),this)">Copy</button></div>'
+  html+='<div class="seal-badge">WORM seal: '+seal+'</div>'
+  html+='</div>'
+  html+='<div class="post-footer"><span class="post-footer-action">'+corpus.length+' corpus items</span><span class="post-footer-action">'+bens.length+' beneficiaries</span><span class="post-footer-action">'+DEFAULT_AXIOMS.length+' sovereign axioms</span><span class="post-footer-action" onclick="fbShare(this)" data-summary="'+escAttr(deedSummary)+'">Share Finding</span></div>'
+  html+='</div>'
+
+  var feed=document.getElementById('feed')
+  feed.insertAdjacentHTML('afterbegin',html)
+  updateFeedToolbar()
+  addBobMsg('I have forged the deed for '+d.name+'. The Prolog runtime is the supreme law of the trust. The plain-English deed is Article I through VI. Download both — the .pl file drops directly into your trust-deed/ folder.',false)
+  } finally{
+  setRunning(false)
+  }
+}
+
+function renderPost(prologResults,facts,statutes,tokens,patterns,seal,elapsed,err){
+  var tabLabels={standing:'Standing Analysis',ach:'ACH / Bank Dispute',zombie:'Zombie Debt',trust:'Trust Law',irs:'IRS Audit',dfa:'DFA Scan'}
+  var allToks=tokens.concat(patterns)
+  var copyRexxEnc=encodeURIComponent(JSON.stringify({tokens:tokens,patterns:patterns}))
+  var factsEnc=facts?encodeURIComponent(JSON.stringify(facts)):''
+  var caseId='CASE-'+seal.slice(0,8).toUpperCase()
+  var topFinding='No automatic standing found'
+  if(prologResults&&prologResults.length){
+    var firstOk=prologResults.find(function(r){return r.ok})
+    if(firstOk)topFinding=firstOk.label
+  } else if(patterns.length){
+    topFinding=patterns[0].value
+  }
+  var shareSummary=caseId+': '+topFinding
+
+  var html='<div class="post">'
+  html+='<div class="post-hdr"><div class="post-avatar" style="background:#e8edf5;color:#3b5998">⚖</div>'
+  html+='<div class="post-meta"><div class="post-author">CARTO Analysis — '+(tabLabels[activeTab]||activeTab)+'</div>'
+  html+='<div class="post-time">'+allToks.length+' tokens · '+elapsed+'ms · '+seal.slice(0,16)+'</div></div>'
+  html+='<button class="post-close" aria-label="Close result" onclick="closePost(this)">&times;</button></div>'
+  html+='<div class="post-body">'
+
+  if(err){html+='<div class="error-box">'+escH(err)+'</div>'}
+
+  // standing verdicts
+  if(prologResults&&prologResults.length){
+    html+='<div class="post-section-hdr">Legal Standing</div>'
+    for(var r of prologResults){
+      html+='<div class="result-row">'
+      if(r.ok) html+='<span class="result-ok">✓ '+escH(r.label)+'</span>'
+      else html+='<span class="result-fail">✗ '+escH(r.label)+'</span>'
+      html+='</div>'
+    }
+  }
+
+  // tokens extracted
+  if(allToks.length){
+    html+='<div class="post-section-hdr">What Was Found in Your Case</div>'
+    for(var t of allToks){
+      var typeLabel={CASE_ID:'Case',ACH_CODE:'ACH Code',EIN:'EIN',DOLLAR:'Amount',TRUST:'Trust',DISPUTE:'Dispute Ground',SOL:'Limitations',CATCODE:'IRS CatCode'}[t.type]||t.type
+      html+='<div class="result-row"><span class="result-type">'+escH(typeLabel)+'</span><span class="result-value">'+escH(t.value)+'</span></div>'
+    }
+  }
+
+  // statutes
+  if(statutes&&statutes.length){
+    html+='<div class="post-section-hdr">Applicable Law</div>'
+    for(var s of statutes){
+      html+='<div class="statute-card">'
+      html+='<span class="statute-cite">'+escH(s.cite)+'</span>'
+      html+='<a class="statute-link" href="'+escAttr(s.url)+'" target="_blank" rel="noopener noreferrer">View on Cornell LII ↗</a>'
+      html+='<div class="statute-desc">'+escH(s.desc)+'</div>'
+      html+='</div>'
+    }
+  }
+
+  // seal
+  html+='<div class="seal-badge">WORM seal: '+seal+'</div>'
+  html+='</div>'
+  html+='<div class="post-footer">'
+  html+='<span class="post-footer-action" onclick="copyAllRexxFromPayload(\''+escAttr(copyRexxEnc)+'\')">Copy REXX calls</span>'
+  if(facts) html+='<span class="post-footer-action" onclick="toggleFacts(this,decodeJsonPayload(\''+escAttr(factsEnc)+'\'))">Show Prolog facts</span>'
+  html+='<span class="post-footer-action" onclick="fbShare(this)" data-summary="'+escAttr(shareSummary)+'">Share Finding</span>'
+  html+='</div>'
+  html+='</div>'
+
+  var feed=document.getElementById('feed')
+  feed.insertAdjacentHTML('afterbegin',html)
+  updateFeedToolbar()
+}
+
+function showError(msg){
+  document.getElementById('feed').insertAdjacentHTML('afterbegin',
+    '<div class="error-box"><button class="post-close" aria-label="Close result" onclick="closePost(this)">&times;</button>'+escH(msg)+'</div>')
+  updateFeedToolbar()
+}
+
+function toggleFacts(btn,facts){
+  var next=btn.nextElementSibling
+  if(next&&next.classList.contains('facts-panel')){next.remove();btn.textContent='Show Prolog facts';return}
+  var div=document.createElement('div')
+  div.className='facts-panel'
+  div.style.cssText='padding:8px 12px;background:#f0f2f5;border-top:1px solid #dddfe2;font-family:\'Courier New\',monospace;font-size:10px;color:#3b5998;line-height:1.6'
+  div.textContent=facts.join('\n')
+  btn.parentNode.insertBefore(div,btn.nextSibling)
+  btn.textContent='Hide Prolog facts'
+}
+
+function copyAllRexx(tokens,patterns){
+  var calls=[]
+  var id=(tokens.find(t=>t.type==='CASE_ID')||{value:'CASE-AUTO'}).value
+  for(var t of tokens) if(t.type==='ACH_CODE') calls.push('rexx rexx-glue-kernel.rexx '+id+' ACH_DISPUTE '+t.value)
+  for(var p of patterns) if(p.type==='DISPUTE') calls.push('rexx rexx-glue-kernel.rexx '+id+' FCRA_DISPUTE '+p.value.toUpperCase().replace(/[\s-]+/g,'_'))
+  for(var p of patterns) if(p.type==='TRUST') calls.push('rexx rexx-glue-kernel.rexx '+id+' TRUST_SCAN '+p.value.toUpperCase().replace(/[\s-]+/g,'_'))
+  navigator.clipboard.writeText(calls.join('\n'))
+}
+
+function copyAllRexxFromPayload(payload){
+  var data=decodeJsonPayload(payload)
+  copyAllRexx(data.tokens||[],data.patterns||[])
+}
+
+function clearAll(){
+  document.querySelectorAll('textarea,input[type="text"]').forEach(t=>t.value='')
+  clearDeedErrors()
+  clearResults()
+}
+
+// ═══════════════════════════════════════════════════
+// BOB CHAT
+// ═══════════════════════════════════════════════════
+var bobCollapsed=false
+function toggleBob(){
+  bobCollapsed=!bobCollapsed
+  document.getElementById('bob-bar').classList.toggle('collapsed',bobCollapsed)
+}
+
+function addBobMsg(text,isUser){
+  var msgs=document.getElementById('bob-messages')
+  var div=document.createElement('div')
+  div.className='bob-msg '+(isUser?'from-user':'from-bob')
+  div.textContent=text
+  msgs.appendChild(div)
+  msgs.scrollTop=msgs.scrollHeight
+}
+
+var BOB_RESPONSES={
+  fcra:['Under 15 USC § 1681c, a furnisher must report the original Date of First Delinquency. Changing that date — re-aging — is a federal violation. You have the right to dispute it directly with the credit bureau and the furnisher.','The FCRA gives you the right to dispute inaccurate information. If the DOFD was changed, the 7-year clock was illegally reset. File a dispute with all three bureaus and send a separate written dispute to the furnisher by certified mail.','If an account was paid, not yours, or unsupported by signed documents, the furnisher must verify it with reasonable care. If they cannot verify it, they must correct or delete it.'],
+  ach:['Under NACHA Operating Rules, an R10 return code means the consumer advises the entry was not authorized. Your bank has 60 days from the statement date to return the entry. Contact your RDFI immediately and file the R10 return request.','NACHA rule 2.12.2 gives you the right to return unauthorized ACH entries. The ODFI bears the risk of loss on R10 returns. Document everything in writing.','If you revoked authorization and the debit still went through, that is a separate rule breach. Preserve the revocation notice and your bank statement together.'],
+  trust:['An irrevocable trust with a continuous WORM chain has a strong defense against dormancy and escheatment claims. The WORM chain proves the trust has never been abandoned. Under most state unclaimed property laws, active administration defeats dormancy.','The key to defeating a dormancy claim is documented continuous activity. Your WORM chain is that documentation — every sealed entry is timestamped and hash-chained, making it tamper-evident and legally defensible.','Trust classification matters. GRAT, irrevocable, and Moorish covenant structures each route to different standing and governance logic.'],
+  zombie:['Under the FDCPA, collecting on a time-barred debt without disclosure is a deceptive practice under 15 USC § 1692e. The statute of limitations varies by state — in most states it is 3-6 years. After it expires, collectors cannot sue you, though they can still contact you.','A zombie debt collector may try to re-age the account to make it appear newer than it is. This violates FCRA § 1681c. Request the full payment history and original account documents in writing.','If the account was sold again, demand the chain of assignment. A broken assignment chain is a real dispute ground, not a cosmetic paperwork issue.'],
+  fdcpa:['Repeated calls, threats, and harassment fit the FDCPA lane. 15 USC § 1692 and § 1692e are the core consumer protections here.','If they keep calling after you dispute the debt or demand validation, document the call pattern. Frequency and tone matter under harassment analysis.','Collectors cannot use false, deceptive, or misleading representations to pressure payment. Keep voicemails, timestamps, and collector names.'],
+  deed:['A deed forge run should produce two outputs: the plain-English deed and the Prolog runtime deed. The Prolog file is the executable law of the trust.','Do not treat the .pl file as decorative. It is the actual governance surface that constrains trustee action and adversarial inputs.','Trust corpus and beneficiaries should be explicit. Ambiguity at deed generation becomes governance ambiguity later.'],
+  general:['I have reviewed your case. Use the Analyse button to get a full standing analysis with applicable statutes.','Describe your situation in more detail and I will identify the applicable law and your rights.','I operate under the Bel Esprit Trust Deed. My reasoning is governed by Prolog logic that cannot be overridden by instruction.'],
+}
+
+function bobReact(results,statutes,tokens,patterns){
+  var ok=results.filter(r=>r.ok)
+  if(!ok.length){addBobMsg('Your case was analysed. No automatic standing was derived from the facts provided. Try adding more specific details — dates, return codes, or specific violations.',false);return}
+  var label=ok[0].label.toLowerCase()
+  var pool=label.includes('fcra')||label.includes('dispute')?BOB_RESPONSES.fcra
+    :label.includes('ach')?BOB_RESPONSES.ach
+    :label.includes('fdcpa')||label.includes('harassment')?BOB_RESPONSES.fdcpa
+    :label.includes('trust')||label.includes('dormancy')?BOB_RESPONSES.trust
+    :label.includes('sol')||label.includes('limitations')?BOB_RESPONSES.zombie
+    :BOB_RESPONSES.general
+  addBobMsg(pool[Math.floor(Math.random()*pool.length)],false)
+}
+
+function bobSend(){
+  var input=document.getElementById('bob-input')
+  var text=input.value.trim()
+  if(!text)return
+  addBobMsg(text,true)
+  input.value=''
+  // keyword routing
+  var lower=text.toLowerCase()
+  setTimeout(function(){
+    var pool=lower.includes('credit')||lower.includes('fcra')||lower.includes('report')?BOB_RESPONSES.fcra
+      :lower.includes('ach')||lower.includes('bank')||lower.includes('charge')?BOB_RESPONSES.ach
+      :lower.includes('fdcpa')||lower.includes('collector')||lower.includes('calling')||lower.includes('harass')?BOB_RESPONSES.fdcpa
+      :lower.includes('deed')||lower.includes('beneficiar')||lower.includes('grantor')?BOB_RESPONSES.deed
+      :lower.includes('trust')||lower.includes('dormant')?BOB_RESPONSES.trust
+      :lower.includes('debt')||lower.includes('collector')||lower.includes('old')?BOB_RESPONSES.zombie
+      :BOB_RESPONSES.general
+    addBobMsg(pool[Math.floor(Math.random()*pool.length)],false)
+  },600)
+}
+
+// ═══════════════════════════════════════════════════
+// CARTO FINANCIAL ENGINE
+// ═══════════════════════════════════════════════════
+var cartoCollapsed=false
+function toggleCarto(){
+  cartoCollapsed=!cartoCollapsed
+  document.getElementById('carto-bar').classList.toggle('collapsed',cartoCollapsed)
+}
+
+function addCartoMsg(text,isUser,cite){
+  var msgs=document.getElementById('carto-messages')
+  var div=document.createElement('div')
+  div.className='carto-msg '+(isUser?'from-user':'from-carto')
+  div.textContent=text
+  msgs.appendChild(div)
+  if(cite){
+    var c=document.createElement('div')
+    c.className='carto-cite'
+    c.textContent=cite
+    msgs.appendChild(c)
+  }
+  msgs.scrollTop=msgs.scrollHeight
+}
+
+var CARTO_KB=[
+  {
+    keys:['r&d','r and d','research','section 41','41 credit','rd credit','qualified research'],
+    answer:'Section 41 R&D credit applies to qualified research expenses (QREs) including wages, supplies, and contract research. As a trust operating an AI or software stack, wages paid to researchers are QREs if the work tests or discovers a technical uncertainty. The credit is 20% of QREs above your base amount, or 6% flat under the Alternative Simplified Credit (ASC). Startups and pass-through entities use Form 6765.',
+    cite:'IRC § 41 — Credit for Increasing Research Activities | 26 USC § 41\nIRC § 41(b) — Qualified Research Expenses (wages, supplies, contracts)\nIRC § 41(c)(4) — Alternative Simplified Credit (6% ASC)\nForm 6765 — Credit for Increasing Research Activities'
+  },
+  {
+    keys:['direct pay','elective pay','6417','refundable','nonprofit credit','trust credit'],
+    answer:'Direct Pay (§ 6417, IRA 2022) lets tax-exempt entities — including irrevocable trusts treated as tax-exempt under § 501 — elect to receive R&D and clean energy credits as direct cash payments instead of tax offsets. File Form 3800 with the election. The IRS treats it as a refund, not income. This is the mechanism that makes R&D credits liquid for a trust with no tax liability.',
+    cite:'IRC § 6417 — Elective Payment of Applicable Credits (Direct Pay)\nIRA 2022, § 13801 — enacted Direct Pay for tax-exempt entities\nForm 3800 — General Business Credit (Direct Pay election line)'
+  },
+  {
+    keys:['section 179','179','equipment','write off','deduction','asset','computer','hardware'],
+    answer:'Section 179 lets you deduct the full cost of qualifying business assets in the year they are placed in service, up to $1,160,000 (2023 limit, inflation-adjusted). Software, computers, and off-the-shelf tech all qualify. A trust that is the operating entity can take the § 179 deduction on its return. If the trust passes income to beneficiaries, the deduction flows through on Schedule K-1.',
+    cite:'IRC § 179 — Election to Expense Certain Depreciable Business Assets\n2023 limit: $1,160,000 | phase-out begins at $2,890,000\nTreas. Reg. § 1.179-1 — election procedures\nIRS Pub. 946 — How to Depreciate Property'
+  },
+  {
+    keys:['net 30','net30','vendor credit','business credit','trade credit','credit line','payment terms'],
+    answer:'Net-30 vendor accounts (e.g., Uline, Grainger, Quill, Summa Office Supplies) report to Dun & Bradstreet and build your business credit file independently of personal credit. Three Net-30 accounts reporting = PAYDEX score. PAYDEX 80+ = fundability tier 3. Use the Net-30 line to pay qualifying R&D expenses, then offset with the § 41 credit refunded via § 6417 Direct Pay. The cycle: Net-30 purchase → expense → R&D credit → Direct Pay cash → pay the Net-30.',
+    cite:'D&B PAYDEX score methodology (Dun & Bradstreet)\nNAICS fundability tiers (D&B/Experian business scoring)\nIRC § 41 + IRC § 6417 — the credit/Direct Pay cycle'
+  },
+  {
+    keys:['fundability','tier','duns','ein','business credit score','paydex','experian business'],
+    answer:'Fundability tiers run 1–5. Tier 1: EIN only, no D&B file. Tier 2: D&B DUNS number created, PAYDEX < 50. Tier 3: 3+ Net-30 accounts reporting, PAYDEX 80+. Tier 4: revolving credit lines, Experian Intelliscore > 65. Tier 5: bank-grade — term loans, SBA eligibility, and LOCs. Your trust EIN is the anchor. Each tier unlocks the next credit instrument.',
+    cite:'D&B Dun & Bradstreet PAYDEX scoring guide\nExperian Intelliscore Plus methodology\nSBA 7(a) eligibility — business credit requirements\nAlienChain fundability_tier/3 Prolog predicate'
+  },
+  {
+    keys:['offshore trust','foreign trust','offshore','ip trust','ip offshore','generation wealth','generational wealth'],
+    answer:'A domestic irrevocable trust holding IP can license that IP to a foreign entity. The royalty income flows to the trust. A Grantor Retained Annuity Trust (GRAT) under § 2702 freezes estate value — appreciation above the § 7520 rate passes to heirs gift-tax-free. For offshore structures: Puerto Rico Act 60 (formerly Act 20/22) offers a 4% corporate rate and 0% dividend tax for eligible businesses relocated there. Pair with a § 501(c)(3) covenant GRAT for the community benefit layer.',
+    cite:'IRC § 2702 — Special Valuation Rules for GRATs\nIRC § 7520 — hurdle rate (applicable federal rate)\nPuerto Rico Act 60 — Export Services / Individual Investor Acts\nIRC § 501(c)(3) — tax-exempt organizations'
+  },
+  {
+    keys:['depreciation','bonus depreciation','168k','macrs','amortize','amortization'],
+    answer:'Bonus depreciation (§ 168(k)) allows 60% first-year deduction for qualified property placed in service in 2024 (phasing down 20% per year from 100% in 2022). Combine with § 179 for maximum first-year write-off. R&D software developed internally is amortized over 5 years (domestic) under § 174 as amended by TCJA 2017 — the § 174 amortization requirement took effect 2022, but is the subject of pending legislation to restore immediate expensing.',
+    cite:'IRC § 168(k) — Bonus Depreciation (60% for 2024 assets)\nIRC § 179 — Immediate expensing election\nIRC § 174 — R&D amortization (5 years domestic, 15 years foreign)\nTCJA 2017 — Tax Cuts and Jobs Act § 174 change'
+  },
+  {
+    keys:['payroll tax','fica','employer','941','startup credit','payroll r&d'],
+    answer:'Startups with ≤ $5M gross receipts and ≤ 5 years of receipts can elect to apply up to $250,000 of the § 41 R&D credit against payroll taxes (§ 41(h)). Doubled to $500,000 for tax years beginning after 2022. This is cash-equivalent if you have employees — the credit offsets the employer FICA match on Form 941, reducing payroll tax deposits.',
+    cite:'IRC § 41(h) — Payroll Tax Credit Election for Qualified Small Businesses\nIRA 2022 increased limit to $500,000 (§ 13902)\nForm 941 — Employer Quarterly Federal Tax Return\nForm 8974 — Qualified Small Business Payroll Tax Credit'
+  },
+]
+
+var CARTO_FALLBACK={
+  answer:"I didn't find a specific statute match for that. Try asking about: R&D credits (Section 41), Direct Pay refunds (Section 6417), Section 179 asset write-offs, Net-30 vendor credit building, fundability tiers 1–5, GRAT / offshore trust structures, or bonus depreciation.",
+  cite:'MyLaw CARTO engine — financial_intel.pl knowledge base\nAsk CARTO: r&d, direct pay, section 179, net-30, fundability, offshore trust'
+}
+
+function cartoRoute(text){
+  var lower=text.toLowerCase()
+  for(var i=0;i<CARTO_KB.length;i++){
+    var entry=CARTO_KB[i]
+    for(var j=0;j<entry.keys.length;j++){
+      if(lower.includes(entry.keys[j])) return entry
+    }
+  }
+  return CARTO_FALLBACK
+}
+
+function cartoSend(){
+  var input=document.getElementById('carto-input')
+  var text=input.value.trim()
+  if(!text)return
+  addCartoMsg(text,true)
+  input.value=''
+  var lower=text.toLowerCase()
+  setTimeout(function(){
+    var result=cartoRoute(lower)
+    addCartoMsg(result.answer,false,result.cite)
+    wormSeal('carto_query',{q:text.slice(0,80)})
+  },500)
+}
+
+// top search
+document.getElementById('top-search').addEventListener('keydown',function(e){
+  if(e.key!=='Enter')return
+  var q=this.value.trim().toLowerCase()
+  if(!q)return
+  addBobMsg('Searching for: '+this.value,true)
+  setTimeout(function(){
+    var lower=q
+    var pool=lower.includes('credit')||lower.includes('fcra')?BOB_RESPONSES.fcra
+      :lower.includes('ach')||lower.includes('bank')?BOB_RESPONSES.ach
+      :lower.includes('fdcpa')||lower.includes('collector')||lower.includes('calling')?BOB_RESPONSES.fdcpa
+      :lower.includes('deed')?BOB_RESPONSES.deed
+      :lower.includes('trust')?BOB_RESPONSES.trust
+      :lower.includes('debt')||lower.includes('collection')?BOB_RESPONSES.zombie
+      :BOB_RESPONSES.general
+    addBobMsg(pool[Math.floor(Math.random()*pool.length)],false)
+    if(!bobCollapsed)return
+    toggleBob()
+  },400)
+})
+
+window.fbAsyncInit = function() {
+  FB.init({ appId: document.querySelector('meta[property="fb:app_id"]').content,
+            cookie: true, xfbml: false, version: 'v21.0' });
+  FB.getLoginStatus(updateFBUI);
+};
+
+function fbLogin() {
+  FB.login(function(r) {
+    if (r.authResponse) updateFBUI(r);
+  }, { scope: 'public_profile' });
+}
+
+function updateFBUI(r) {
+  const btn  = document.getElementById('fb-login-btn');
+  const name = document.getElementById('fb-user-name');
+  if (r.status === 'connected') {
+    FB.api('/me', { fields: 'first_name' }, function(u) {
+      btn.style.display  = 'none';
+      name.textContent   = u.first_name;
+      name.style.display = 'inline';
+    });
+  } else {
+    btn.style.display  = 'inline-block';
+    name.style.display = 'none';
+  }
+}
+
+function fbShare(el) {
+  const summary = el.getAttribute('data-summary') ||
+                  document.title + ' — MyLaw case analysis';
+  FB.ui({
+    method:      'share',
+    href:        window.location.href,
+    quote:       summary.slice(0, 200),
+    hashtag:     '#KnowYourRights'
+  }, function(r) {
+    if (r && !r.error_message)
+      el.textContent = 'Shared ✓';
+  });
+}
+
+const WORKER_FEED = '';
+window.addEventListener('DOMContentLoaded', function() {
+  if (WORKER_FEED) {
+    fetch(WORKER_FEED + '/feed')
+      .then(function(r){ return r.json(); })
+      .then(function(posts) { posts.forEach(function(p) { appendWebhookPost(p); }); })
+      .catch(function() {});
+  }
+});
+
+function appendWebhookPost(p) {
+  const el = document.createElement('div');
+  el.className = 'post';
+  el.innerHTML = `
+      <div class="post-hdr">
+        <div class="post-avatar" style="background:#3b5998;color:#fff">📥</div>
+        <div class="post-meta">
+          <div class="post-author">${escHtml(p.badge)}</div>
+          <div class="post-time">${escHtml(p.caseType)} · via Meta · ${escHtml(new Date(p.ts).toLocaleTimeString())}</div>
+        </div>
+        <button class="post-close" aria-label="Close result" onclick="this.closest('.post').remove();updateFeedToolbar()">&times;</button>
+      </div>
+      <div class="post-body">
+        <div class="result-value">${escHtml(String(p.text || '').slice(0,300))}</div>
+      </div>
+      <div class="post-footer">
+        <span class="post-footer-action" onclick="analyzeWebhookPost('${escAttr(String(p.text || ''))}')">Analyse this →</span>
+      </div>`;
+  document.getElementById('feed').prepend(el);
+  updateFeedToolbar();
+}
+
+function analyzeWebhookPost(txt) {
+  document.querySelector('textarea.wall-input').value = txt;
+  document.querySelector('.btn-primary').click();
+}
+</script>
+</body>
+</html>
